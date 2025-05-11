@@ -14,3 +14,7 @@
 # 仓库使用
 在跟目录运行`npm run server`,输入网址127.0.0.1:8080预览网页
 （运行不了则在cmd上运行`node app.js`）
+
+1. html,css,js全放在public文件夹下,html中的js、css链接参考index.html
+2. 一些运行脚本放在scripts文件夹下（现有一个将excel一键导入mysql的py脚本）
+3. 有关nodejs的模块放在lib文件夹下
