@@ -20,6 +20,10 @@ app.get('/login', (req, res) =>
 {
     res.sendFile(__dirname + '/public/html/login.html')
 });
+app.get('/favlist', (req, res) =>
+{
+    res.sendFile(__dirname + '/public/html/favlist.html')
+});
 app.get('/', (req, res) =>
 {
     res.redirect('/index');
