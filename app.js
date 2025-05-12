@@ -16,10 +16,15 @@ app.get('/index', (req, res) =>
 {
     res.sendFile(__dirname + '/public/html/index.html')
 });
+app.get('/login', (req, res) =>
+{
+    res.sendFile(__dirname + '/public/html/login.html')
+});
 app.get('/', (req, res) =>
 {
     res.redirect('/index');
 });
+
 
 app.post('/bangumiInfo', (req, res) =>
 {
