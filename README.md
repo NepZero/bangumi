@@ -12,7 +12,7 @@
 4. 导入数据库文件（database文件夹下）详细参考此[文章](https://blog.csdn.net/qq_40930559/article/details/104024283).
 
 # 仓库使用
-在跟目录运行`npm run server`,输入网址127.0.0.1:8080预览网页
+在项目根目录运行`npm run server`,输入网址127.0.0.1:8080预览网页
 （运行不了则在cmd上运行`node app.js`）
 
 1. html,css,js全放在public文件夹下,html中的js、css链接参考index.html
