@@ -17,6 +17,7 @@ function Init()
         bangumicard[i].style.backgroundColor = "red";
         bangumicard[i].style.margin = "1vw auto";
         bangumicard[i].style.borderRadius = "0.5vw";
+        bangumicards_box.appendChild(bangumicard[i]);
 
         bangumicard_image = document.createElement('div');
         bangumicard_image.style.height = "100%";
@@ -116,7 +117,6 @@ function Init()
         bangumicard_start.style.fontSize = "1vw";
         bangumicard[i].appendChild(bangumicard_start);
 
-        bangumicards_box.appendChild(bangumicard[i]);
     }
 }
 
