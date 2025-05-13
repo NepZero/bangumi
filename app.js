@@ -30,7 +30,27 @@ app.get('/', (req, res) =>
 });
 
 
+/**
+ * 请求季度番剧信息的接口
+ */
 app.post('/bangumiInfo', (req, res) =>
+{
+    const index = req.headers['index']; //键名
+    const key = req.headers['key']; //对应的值
+    db.getAll('bangumi_info', index, key)
+        .then(data =>
+        {
+            console.log(data);
+            res.json({
+                success: true,
+                data: data[0],
+                timestamp: new Date().toISOString()
+            });
+        })
+    // res.send(`接收到的表名: ${tableName}`);
+});
+
+app.post('/login', (req, res) =>
 {
     const tableName = req.headers['table'];
     console.log(tableName);
