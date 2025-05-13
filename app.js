@@ -2,13 +2,14 @@
 const express = require('express');
 const db = require('./lib/mysql.js');
 const session = require("express-session");
+const e = require('express');
 
 //创建应用对象
 const app = express();
 app.use(express.static('./public'));
 app.use(session({
     name: 'sid',   //设置cookie的name，默认值是：connect.sid
-    secret: 'atguigu', //参与加密的字符串（又称签名）
+    secret: 'nepnep', //参与加密的字符串（又称签名）
     saveUninitialized: false, //是否为每次请求都设置一个cookie用来存储session的id
     resave: true,  //是否在每次请求时重新保存session
     cookie: {
@@ -48,31 +49,65 @@ app.post('/bangumiInfo', (req, res) =>
 {
     const index = req.headers['index']; //键名
     const key = req.headers['key']; //对应的值
-    db.getAll('bangumi_info', index, key)
-        .then(data =>
-        {
-            console.log(data);
-            res.json({
-                success: true,
-                data: data[0],
-                timestamp: new Date().toISOString()
-            });
-        })
+    //有登录则返回个人信息
+    if (req.session.username)
+    {
+        res.json({
+            success: true,
+            data: [],
+            timestamp: new Date().toISOString()
+        });
+    }
+    else
+    {
+        db.getAll('bangumi_info', index, key)
+            .then(data =>
+            {
+                // console.log(data);
+                res.json({
+                    success: true,
+                    data: data[0],
+                    timestamp: new Date().toISOString()
+                });
+            })
+    }
     // res.send(`接收到的表名: ${tableName}`);
 });
-
-app.post('/register', (req, res) =>
+/**
+ * 注册接口
+ * code 200-注册成功    403-用户已存在  404-注册失败
+ */
+app.get('/register', (req, res) =>
 {
-    const tableName = req.headers['table'];
-    console.log(tableName);
-    db.getAll(tableName)
+    // const user = req.headers['user'];
+    // const password = req.headers['password'];
+    const user = req.query['user'];
+    const password = req.query['password'];
+    db.getAll('login_info', 'user', user)
         .then(data =>
         {
-            res.json({
-                success: true,
-                data: data,
-                timestamp: new Date().toISOString()
-            });
+            data = data[0];
+            if (data.length == 0)
+            {
+                db.insert_login(user, password)
+                    .then(flag =>
+                    {
+                        if (flag == 1)
+                        {
+                            req.session.username = user;
+                            res.json({ 'code': 200 });
+                        }
+                        else
+                        {
+                            res.json({ 'code': 404, 'error': "fault" });
+                        }
+                    })
+
+            }
+            else
+            {
+                res.json({ 'code': 403, 'error': 'Already Exist' })
+            }
         })
     // res.send(`接收到的表名: ${tableName}`);
 });
@@ -96,6 +131,7 @@ app.post('/login', (req, res) =>
             {
                 if (data["password"] == password)
                 {
+                    req.session.username = user;
                     res.json({ 'code': 200 })
                 }
                 else
@@ -106,6 +142,25 @@ app.post('/login', (req, res) =>
         })
     // res.send(`接收到的表名: ${tableName}`);
 });
+
+app.get('/test', (req, res) =>
+{
+    req.session.username = 'zhangsan';
+    res.send('登录成功');
+});
+app.get('/test1', (req, res) =>
+{
+    if (req.session.username)
+    {
+        res.send(`你好 ${req.session.username}`);
+    }
+    else
+    {
+        res.send(`请登录注册`);
+    }
+});
+
+
 
 //监听端口 启动服务
 app.listen(8080, () =>
