@@ -1,10 +1,21 @@
 //导入 express
 const express = require('express');
 const db = require('./lib/mysql.js');
+const session = require("express-session");
 
 //创建应用对象
 const app = express();
 app.use(express.static('./public'));
+app.use(session({
+    name: 'sid',   //设置cookie的name，默认值是：connect.sid
+    secret: 'atguigu', //参与加密的字符串（又称签名）
+    saveUninitialized: false, //是否为每次请求都设置一个cookie用来存储session的id
+    resave: true,  //是否在每次请求时重新保存session
+    cookie: {
+        httpOnly: true, // 开启后前端无法通过 JS 操作
+        maxAge: 1000 * 300 // 这一条 是控制 sessionID 的过期时间的！！！
+    },
+}))
 
 
 //创建路由规则
@@ -50,7 +61,7 @@ app.post('/bangumiInfo', (req, res) =>
     // res.send(`接收到的表名: ${tableName}`);
 });
 
-app.post('/login', (req, res) =>
+app.post('/register', (req, res) =>
 {
     const tableName = req.headers['table'];
     console.log(tableName);
@@ -62,6 +73,36 @@ app.post('/login', (req, res) =>
                 data: data,
                 timestamp: new Date().toISOString()
             });
+        })
+    // res.send(`接收到的表名: ${tableName}`);
+});
+/**
+ * 登录接口
+ * code:404-用户不存在  401用户密码错误    200登录成功
+ */
+app.post('/login', (req, res) =>
+{
+    const user = req.headers['user'];
+    const password = req.headers['password'];
+    db.getAll('login_info', 'user', user)
+        .then(data =>
+        {
+            data = data[0];
+            if (data.length == 0)
+            {
+                res.json({ 'code': 404, 'error': 'Not Found' })
+            }
+            else
+            {
+                if (data["password"] == password)
+                {
+                    res.json({ 'code': 200 })
+                }
+                else
+                {
+                    res.json({ 'code': 401, 'error': 'Unauthorized' })
+                }
+            }
         })
     // res.send(`接收到的表名: ${tableName}`);
 });
