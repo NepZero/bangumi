@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bangumi Register</title>
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/register.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -37,28 +37,36 @@
 
     <!-- Main content -->
     <div class="container">
-        <div class="login-container">
-            <div class="login-form">
-                <h2 class="section-title">登录至 Bangumi</h2>
+        <div class="register-container">
+            <div class="register-form">
+                <h2 class="section-title">注册成为 Bangumi会员</h2>
                 <form>
                     <div class="form-group">
                         <label class="form-label">你的 Email 地址</label>
                         <input type="email" class="form-input">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">你的密码</label>
+                        <label class="form-label">设置密码</label>
                         <input type="password" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">确认密码</label>
+                        <input type="password" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">设置昵称</label>
+                        <input type="text" class="form-input">
                     </div>
                     <div class="checkbox-group">
                         <input type="checkbox" id="remember">
-                        <label for="remember">不记住我的登录状态</label>
+                        <label for="remember">我已同意用户协议</label>
                     </div>
-                    <button type="submit" class="login-button">登录</button>
+                    <button type="submit" class="register-button">注册会员</button>
                 </form>
             </div>
-            <div class="register-section">
-                <label class="form-label">还没有 Bangumi 账户？</label>
-                <button class="register-button">立即注册</button>
+            <div class="login-section">
+                <label class="form-label">已经注册过 Bangumi 账户？</label>
+                <button class="login-button">立即登录</button>
                 <label class="form-label">忘记密码？</label>
                 <a href="#" class="reset-password">重置密码</a>
             </div>

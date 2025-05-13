@@ -1,23 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
-    <link rel="stylesheet" href="/css/favlist.css">
+    <title>Bangumi Favorite</title>
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../css/favlist.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
-
 <body>
-    <nav>
-        <ul>
-            <li>番剧放送</li>
-            <li>首页</li>
-            <li>历史数据</li>
-            <li>番剧索引</li>
-        </ul>
+    <nav class="header">
+        <div class="left-logo">
+            <a href="#" class="logo">bangumi</a>
+        </div>
+        <div class="nav-items">
+            <a href="#" class="nav-item">动画</a>
+            <a href="#" class="nav-item">书籍</a>
+            <a href="#" class="nav-item">音乐</a>
+            <a href="#" class="nav-item">游戏</a>
+            <a href="#" class="nav-item">三次元</a>
+            <a href="#" class="nav-item">人物</a>
+            <a href="#" class="nav-item">剧评</a>
+            <a href="#" class="nav-item">小组</a>
+        </div>
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="搜索">
+            <i class="search-icon fas fa-search"></i>
+        </div>
+        <div class="button-group">
+            <button class="button-primary">登录</button>
+            <button class="button-secondary">注册</button>
+        </div>
     </nav>
-    <script type="text/javascript" src="/javascript/favlist.js"></script>
-</body>
 
+    <!-- 内容区域 -->
+    <div class="main-container">
+        <div class="collection-header">
+            <h1 class="collection-title">收藏的番剧</h1>
+        </div>
+
+        <!-- 番剧列表 -->
+        <div class="anime-grid">
+            <!-- 番剧卡片模板 -->
+            <div class="anime-card">
+                <div class="cover-image">
+                    <img src="" alt="">
+                </div>
+                <div class="anime-info">
+                    <div class="anime-name">名侦探柯南</div>
+                    <div class="meta-info">
+                        <span class="region-tag">番剧·日本</span>
+                        <span class="episode-info">更新至1220话</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 更多番剧卡片（重复结构） -->
+            <div class="anime-card">
+                <div class="cover-image">
+                    <img src="" alt="">
+                </div>
+                <div class="anime-info">
+                    <div class="anime-name">青之箱</div>
+                    <div class="meta-info">
+                        <span class="region-tag">番剧·日本</span>
+                        <span class="episode-info">全25话</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 其他卡片示例 -->
+            <div class="anime-card">
+                <div class="cover-image">
+                    <img src="" alt="">
+                </div>
+                <div class="anime-info">
+                    <div class="anime-name">BanG Dream!</div>
+                    <div class="meta-info">
+                        <span class="region-tag">番剧·日本</span>
+                        <span class="episode-info">全12话</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="anime-card">
+                <div class="cover-image">
+                    <img src="" alt="">
+                </div>
+                <div class="anime-info">
+                    <div class="anime-name">BanG Dream!</div>
+                    <div class="meta-info">
+                        <span class="region-tag">番剧·日本</span>
+                        <span class="episode-info">全12话</span>
+                    </div>
+                </div>
+            </div>
+            <div class="anime-card">
+                <div class="cover-image">
+                    <img src="" alt="">
+                </div>
+                <div class="anime-info">
+                    <div class="anime-name">BanG Dream!</div>
+                    <div class="meta-info">
+                        <span class="region-tag">番剧·日本</span>
+                        <span class="episode-info">全12话</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 更多卡片结构相同... -->
+        </div>
+    </div>
+</body>
 </html>
