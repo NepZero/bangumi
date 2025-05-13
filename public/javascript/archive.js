@@ -34,7 +34,7 @@ function Init()
         bangumicard_header.style.backgroundColor = "blue";
         bangumicard_header.style.left = "20%";
         bangumicard_header.style.top = "5%";
-        bangumicard_header.innerHTML = bangumi_informations[i - 1]["name"];
+        bangumicard_header.innerHTML = bangumi_informations[i - 1]["banguminame"];
         bangumicard_header.style.textAlign = "center";
         bangumicard_header.style.fontSize = "1.5vw";
         bangumicard[i].appendChild(bangumicard_header);
@@ -125,17 +125,20 @@ function main()
     let xhr = new XMLHttpRequest();
     xhr.open("post", "/bangumiInfo", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('table', 'season_2024_10');
+    xhr.setRequestHeader('index', 'season');
+    xhr.setRequestHeader('key', '2025.4');
     xhr.send();
     xhr.onreadystatechange = function () 
     {
         if (xhr.readyState == 4 && xhr.status == 200)
         {
             bangumi_informations = JSON.parse(xhr.response)["data"];
+            console.log(bangumi_informations);
             Init();
         }
         else if (xhr.status == 404)
         {
+            console.log("接受信息失败");
         }
     }
 }
