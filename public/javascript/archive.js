@@ -146,15 +146,16 @@ async function fetchData()
 {
     try
     {
-        fetchA = fetch('/bangumiInfo', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
-        fetchB = fetch('/is_login', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
+        fetchA = fetch('/bangumiInfo', { method: 'POST', headers: { 'Content-Type': 'application/json', 'season': '2025.4' } }).then(response => response.json());
+        fetchB = fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json', 'user': 'nepnepss' } }).then(response => response.json());
         fetchC = fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json', 'user': 'nepnep' } }).then(response => response.json());
         const responseA = await fetchA;
         const responseB = await fetchB;
         const responseC = await fetchC;
         bangumi_informations = responseA['data'];
         console.log(bangumi_informations);
-        console.log(responseC);
+        console.log(responseB);
+        console.log(responseC['bangumi_list']);
         Init();
     }
     catch (error)
