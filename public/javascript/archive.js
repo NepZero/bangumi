@@ -148,7 +148,7 @@ async function fetchData()
     {
         fetchA = fetch('/bangumiInfo', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
         fetchB = fetch('/is_login', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
-        fetchC = fetch('/week_table', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
+        fetchC = fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json', 'user': 'nepnep' } }).then(response => response.json());
         const responseA = await fetchA;
         const responseB = await fetchB;
         const responseC = await fetchC;

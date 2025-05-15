@@ -197,16 +197,11 @@ app.post('/user_like', (req, res) =>
 {
     const user = req.headers['user'];
     // user = req.query['user'];
-    db.getAll('uesrlike_info', 'user', user)
+    db.getuser_like(user)
         .then(data =>
         {
             data = data[0];
-            likes = [];
-            for (let i = 0; i < data.length; i++)
-            {
-                likes.push(data[i]['likes']);
-            }
-            res.json({ 'likes': likes });
+            res.json({ 'bangumi_list': data });
         })
 });
 
