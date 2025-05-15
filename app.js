@@ -14,7 +14,7 @@ app.use(session({
     resave: true,  //是否在每次请求时重新保存session
     cookie: {
         httpOnly: true, // 开启后前端无法通过 JS 操作
-        maxAge: 1000 * 300 // 这一条 是控制 sessionID 的过期时间的！！！
+        maxAge: 1000 * 60 * 3600 // 这一条 是控制 sessionID 的过期时间的！！！
     },
 }))
 
@@ -51,25 +51,25 @@ app.get('/', (req, res) =>
  */
 app.post('/bangumiInfo', (req, res) =>
 {
-    const index = req.headers['index']; //键名
-    const key = req.headers['key']; //对应的值
+    const season = req.headers['season'];
     //有登录则返回个人信息
     if (req.session.username)
     {
         res.json({
-            success: true,
+            code: 201,
             data: [],
+            likes: [],
             timestamp: new Date().toISOString()
         });
     }
     else
     {
-        db.getAll('bangumi_info', index, key)
+        db.getAll_season('bangumi_info', season)
             .then(data =>
             {
                 // console.log(data);
                 res.json({
-                    success: true,
+                    code: 200,
                     data: data[0],
                     timestamp: new Date().toISOString()
                 });
@@ -81,12 +81,12 @@ app.post('/bangumiInfo', (req, res) =>
  * 注册接口
  * code 200-注册成功    403-用户已存在  404-注册失败
  */
-app.get('/register', (req, res) =>
+app.post('/register', (req, res) =>
 {
-    // const user = req.headers['user'];
-    // const password = req.headers['password'];
-    const user = req.query['user'];
-    const password = req.query['password'];
+    const user = req.headers['user'];
+    const password = req.headers['password'];
+    // const user = req.query['user'];
+    // const password = req.query['password'];
     db.getAll('login_info', 'user', user)
         .then(data =>
         {
@@ -117,7 +117,7 @@ app.get('/register', (req, res) =>
 });
 /**
  * 登录接口
- * code:404-用户不存在  401用户密码错误    200登录成功
+ * code:403-用户不存在  401用户密码错误    200登录成功
  */
 app.post('/login', (req, res) =>
 {
@@ -129,7 +129,7 @@ app.post('/login', (req, res) =>
             data = data[0];
             if (data.length == 0)
             {
-                res.json({ 'code': 404, 'error': 'Not Found' })
+                res.json({ 'code': 403, 'error': 'Not Found' })
             }
             else
             {
@@ -149,8 +149,10 @@ app.post('/login', (req, res) =>
 
 app.get('/test', (req, res) =>
 {
-    req.session.username = 'zhangsan';
-    res.send('登录成功');
+    if (req.session.username)
+        res.send('登录成功');
+    else
+        res.send('登陆失败');
 });
 app.get('/test1', (req, res) =>
 {

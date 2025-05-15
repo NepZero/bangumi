@@ -125,15 +125,15 @@ function main()
     let xhr = new XMLHttpRequest();
     xhr.open("post", "/bangumiInfo", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('index', 'season');
-    xhr.setRequestHeader('key', '2025.4');
+    // xhr.setRequestHeader('index', 'season');
+    xhr.setRequestHeader('season', '2025.4');
     xhr.send();
     xhr.onreadystatechange = function () 
     {
         if (xhr.readyState == 4 && xhr.status == 200)
         {
             bangumi_informations = JSON.parse(xhr.response)["data"];
-            console.log(bangumi_informations);
+            console.log(JSON.parse(xhr.response));
             Init();
         }
         else if (xhr.status == 404)
