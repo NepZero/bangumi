@@ -52,29 +52,18 @@ app.get('/', (req, res) =>
 app.post('/bangumiInfo', (req, res) =>
 {
     const season = req.headers['season'];
-    //有登录则返回个人信息
-    if (req.session.username)
-    {
-        res.json({
-            code: 201,
-            data: [],
-            likes: [],
-            timestamp: new Date().toISOString()
-        });
-    }
-    else
-    {
-        db.getAll_season('bangumi_info', season)
-            .then(data =>
-            {
-                // console.log(data);
-                res.json({
-                    code: 200,
-                    data: data[0],
-                    timestamp: new Date().toISOString()
-                });
-            })
-    }
+    const user = req.headers['user'];
+    db.getAll_season('bangumi_info', season)
+        .then(data =>
+        {
+            // console.log(data);
+            res.json({
+                code: 200,
+                data: data[0],
+                like: [],
+                timestamp: new Date().toISOString()
+            });
+        })
     // res.send(`接收到的表名: ${tableName}`);
 });
 /**
