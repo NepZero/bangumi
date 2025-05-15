@@ -40,21 +40,22 @@
         <div class="login-container">
             <div class="login-form">
                 <h2 class="section-title">登录至 Bangumi</h2>
-                <form>
+                <form method="post" action="/login" id="loginForm">
                     <div class="form-group">
                         <label class="form-label">你的 Email 地址</label>
-                        <input type="email" class="form-input">
+                        <input type="text" class="form-input" name="user">
                     </div>
                     <div class="form-group">
                         <label class="form-label">你的密码</label>
-                        <input type="password" class="form-input">
+                        <input type="password" class="form-input" name="password">
                     </div>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="remember">
-                        <label for="remember">不记住我的登录状态</label>
+                        <input type="checkbox" id="remember" name="checkbox">
+                        <label for="remember">记住我的登录状态</label>
                     </div>
                     <button type="submit" class="login-button">登录</button>
                 </form>
+                <div id="msg" style="color:red; margin-top:15px;"></div>
             </div>
             <div class="register-section">
                 <label class="form-label">还没有 Bangumi 账户？</label>
@@ -119,4 +120,5 @@
         </div>
     </div>
 </body>
+<script src="../javascript/login.js"></script>
 </html>
