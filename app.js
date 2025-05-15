@@ -135,7 +135,9 @@ app.post('/login', (req, res) =>
         })
     // res.send(`接收到的表名: ${tableName}`);
 });
-
+/**
+ * 登录状态接口，返回登录信息
+ */
 app.post('/is_login', (req, res) =>
 {
     if (req.session.username)
@@ -152,7 +154,9 @@ app.post('/is_login', (req, res) =>
         res.json({ 'code': 404, 'user': null, 'id': null });
     }
 });
-
+/**
+ * 返回周番剧信息
+ */
 app.post('/week_table', (req, res) =>
 {
     function day2number(day)
@@ -192,7 +196,9 @@ app.post('/week_table', (req, res) =>
             res.json({ 'data': ans, 'today': date.getDay() });
         })
 });
-
+/**
+ * 返回指定用户收藏列表信息
+ */
 app.post('/user_like', (req, res) =>
 {
     const user = req.headers['user'];
