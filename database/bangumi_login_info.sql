@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.42, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.41, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bangumi
 -- ------------------------------------------------------
--- Server version	8.0.42
+-- Server version	8.0.41
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,10 +24,11 @@ DROP TABLE IF EXISTS `login_info`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `login_info` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `user` varchar(15) DEFAULT NULL,
-  `password` varchar(15) DEFAULT NULL,
+  `nickname` varchar(15) NOT NULL,
+  `email` varchar(127) NOT NULL,
+  `password` varchar(15) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +37,7 @@ CREATE TABLE `login_info` (
 
 LOCK TABLES `login_info` WRITE;
 /*!40000 ALTER TABLE `login_info` DISABLE KEYS */;
-INSERT INTO `login_info` VALUES (1,'nepnep','123456'),(2,'nepnep','123456'),(3,'nepnsep','122222'),(4,'nepnsssep','122222'),(5,'test','122222');
+INSERT INTO `login_info` VALUES (6,'123','1','123');
 /*!40000 ALTER TABLE `login_info` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-14 19:55:50
+-- Dump completed on 2025-05-15 23:07:33
