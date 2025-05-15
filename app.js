@@ -7,6 +7,8 @@ const e = require('express');
 //创建应用对象
 const app = express();
 app.use(express.static('./public'));
+app.use(express.json());//返回JSON
+app.use(express.urlencoded({ extended: true }));//解析 form 表单的数据
 app.use(session({
     name: 'sid',   //设置cookie的name，默认值是：connect.sid
     secret: 'nepnep', //参与加密的字符串（又称签名）
@@ -17,6 +19,7 @@ app.use(session({
         maxAge: 1000 * 60 * 3600 // 这一条 是控制 sessionID 的过期时间的！！！
     },
 }))
+
 
 
 //创建路由规则
@@ -106,35 +109,38 @@ app.post('/register', (req, res) =>
 });
 /**
  * 登录接口
- * code:403-用户不存在  401用户密码错误    200登录成功
+ * code:403-用户不存在   401用户密码错误    200登录成功    500数据库错误
  */
-app.post('/login', (req, res) =>
-{
-    const user = req.headers['user'];
-    const password = req.headers['password'];
-    db.getAll('login_info', 'user', user)
-        .then(data =>
-        {
-            data = data[0][0];
-            if (data.length == 0)
-            {
-                res.json({ 'code': 403, 'error': 'Not Found' })
-            }
-            else
-            {
-                if (data["password"] == password)
-                {
-                    req.session.username = user;
-                    res.json({ 'code': 200 })
-                }
-                else
-                {
-                    res.json({ 'code': 401, 'error': 'Unauthorized' })
-                }
-            }
-        })
-    // res.send(`接收到的表名: ${tableName}`);
+app.post('/login', async (req, res) => {
+    //在login.js中已经改用fetch重新发送 详情看该文件
+    const user = req.body.user;
+    const password = req.body.password;
+    const isKeepLoginStatus = req.body.checkbox;
+    const searchType = req.body.searchType;
+    try {
+        const result = await db.getAll('login_info', searchType, user);
+        const data = result?.[0]?.[0]; // 安全访问数据
+
+        if (!data) {
+            return res.status(403).json({ code: 403, error: '用户不存在' });
+        }
+
+        if (data.password !== password) {
+            return res.status(401).json({ code: 401, error: '密码错误' });
+        }
+
+        // 设置 session，只存你需要的字段
+        if (isKeepLoginStatus === 'on') {
+            req.session.userId = data.id;
+        }
+
+        return res.status(200).json({ code: 200, message: '登录成功' });
+    } catch (e) {
+        console.error('登录异常：', e);
+        return res.status(500).json({ code: 500, error: e.message || '服务器内部错误' });
+    }
 });
+
 
 app.post('/is_login', (req, res) =>
 {
