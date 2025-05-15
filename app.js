@@ -55,14 +55,13 @@ app.get('/', (req, res) =>
 app.post('/bangumiInfo', (req, res) =>
 {
     const season = req.headers['season'];
-    const user = req.headers['user'];
     db.getAll_season('bangumi_info', season)
         .then(data =>
         {
             // console.log(data);
             res.json({
                 code: 200,
-                data: data[0],
+                data: data,
                 like: [],
                 timestamp: new Date().toISOString()
             });
@@ -82,7 +81,6 @@ app.post('/register', (req, res) =>
     db.getAll('login_info', 'user', user)
         .then(data =>
         {
-            data = data[0];
             if (data.length == 0)
             {
                 db.insert_login(user, password)
@@ -140,8 +138,9 @@ app.post('/login', async (req, res) => {
         return res.status(500).json({ code: 500, error: e.message || '服务器内部错误' });
     }
 });
-
-
+/**
+ * 登录状态接口，返回登录信息
+ */
 app.post('/is_login', (req, res) =>
 {
     if (req.session.username)
@@ -149,8 +148,16 @@ app.post('/is_login', (req, res) =>
         db.getAll('login_info', 'user', req.session.username)
             .then(data =>
             {
-                data = data[0][0];
-                res.json({ 'code': 200, 'username': req.session.username, 'id': data['id'] });
+                if (data.length == 0)
+                {
+                    res.json({ 'code': 403, 'username': null, 'id': null });
+                }
+                else
+                {
+                    data = data[0];
+                    res.json({ 'code': 200, 'username': req.session.username, 'id': data['id'] });
+                }
+
             })
     }
     else
@@ -158,7 +165,9 @@ app.post('/is_login', (req, res) =>
         res.json({ 'code': 404, 'user': null, 'id': null });
     }
 });
-
+/**
+ * 返回周番剧信息
+ */
 app.post('/week_table', (req, res) =>
 {
     function day2number(day)
@@ -182,23 +191,24 @@ app.post('/week_table', (req, res) =>
         .then(data =>
         {
             const date = new Date()
-            data = data[0];
             ans = [];
-            ans.push({ 'day': '周一', 'bangumi': [] });
-            ans.push({ 'day': '周二', 'bangumi': [] });
-            ans.push({ 'day': '周三', 'bangumi': [] });
-            ans.push({ 'day': '周四', 'bangumi': [] });
-            ans.push({ 'day': '周五', 'bangumi': [] });
-            ans.push({ 'day': '周六', 'bangumi': [] });
-            ans.push({ 'day': '周日', 'bangumi': [] });
+            ans.push({ 'day': '周一', 'bangumi_list': [] });
+            ans.push({ 'day': '周二', 'bangumi_list': [] });
+            ans.push({ 'day': '周三', 'bangumi_list': [] });
+            ans.push({ 'day': '周四', 'bangumi_list': [] });
+            ans.push({ 'day': '周五', 'bangumi_list': [] });
+            ans.push({ 'day': '周六', 'bangumi_list': [] });
+            ans.push({ 'day': '周日', 'bangumi_list': [] });
             for (let i = 0; i < data.length; i++)
             {
-                ans[day2number(data[i]['screening'])]['bangumi'].push(data[i]);
+                ans[day2number(data[i]['screening'])]['bangumi_list'].push(data[i]);
             }
             res.json({ 'data': ans, 'today': date.getDay() });
         })
 });
-
+/**
+ * 返回指定用户收藏列表信息
+ */
 app.post('/user_like', (req, res) =>
 {
     const user = req.headers['user'];
@@ -206,11 +216,20 @@ app.post('/user_like', (req, res) =>
     db.getuser_like(user)
         .then(data =>
         {
-            data = data[0];
             res.json({ 'bangumi_list': data });
         })
 });
-
+/**
+ * 每日推荐
+ */
+app.post('/daily_recommend', (req, res) =>
+{
+    db.get_daily()
+        .then(data =>
+        {
+            res.json({ 'bangumi_list': data });
+        })
+});
 
 app.get('/test', (req, res) =>
 {
