@@ -153,7 +153,6 @@ async function fetchData()
         bangumi_informations = responseA['data'];
         console.log(bangumi_informations);
         console.log(responseB);
-        console.log(responseC);
         Init();
     }
     catch (error)

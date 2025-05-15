@@ -153,6 +153,45 @@ app.post('/is_login', (req, res) =>
     }
 });
 
+app.get('/week_table', (req, res) =>
+{
+    function day2number(day)
+    {
+        if (day[1] == "一")
+            return 0;
+        else if (day[1] == "二")
+            return 1;
+        else if (day[1] == "三")
+            return 2;
+        else if (day[1] == "四")
+            return 3;
+        else if (day[1] == "五")
+            return 4;
+        else if (day[1] == "六")
+            return 5;
+        else if (day[1] == "日")
+            return 6;
+    }
+    db.getAll('bangumi_info', 'season', '2025.4')
+        .then(data =>
+        {
+            data = data[0];
+            ans = [];
+            ans.push({ 'day': '周一', 'bangumi': [] });
+            ans.push({ 'day': '周二', 'bangumi': [] });
+            ans.push({ 'day': '周三', 'bangumi': [] });
+            ans.push({ 'day': '周四', 'bangumi': [] });
+            ans.push({ 'day': '周五', 'bangumi': [] });
+            ans.push({ 'day': '周六', 'bangumi': [] });
+            ans.push({ 'day': '周日', 'bangumi': [] });
+            for (let i = 0; i < data.length; i++)
+            {
+                ans[day2number(data[i]['screening'])]['bangumi'].push(data[i]);
+            }
+            res.json({ 'data': ans });
+        })
+});
+
 
 app.get('/test', (req, res) =>
 {

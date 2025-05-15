@@ -73,7 +73,7 @@ fetchData();
 |  字段   | 类型  | 内容 | 备注 |
 | :----: | :----: | :----: | :----: |
 | code | int | 响应状态 | 200-响应成功|
-| data | dict | 番剧数据 | |
+| data | array | 番剧数据 | |
 | timestamp | Date | 响应时间 | |
 | like | array | 该用户的收藏列表 | 没有则响应空列表 |
 data:
@@ -86,3 +86,19 @@ data:
 | screening | str | 每周播出时间 | |
 | season | str | 季度 | |
 | start_time | str | 首播日期 | |
+
+## 每周番剧信息接口
+**请求地址:** /week_table
+**请求方式:** post
+**请求头**: 无
+**json回复:**
+|  字段   | 类型  | 内容 | 备注 |
+| :----: | :----: | :----: | :----: |
+| data | array | 详细信息 | |
+| today | int | 今天是周几 | |
+
+data:
+|  字段   | 类型  | 内容 | 备注 |
+| :----: | :----: | :----: | :----: |
+| day | str | 周几 | |
+| bangumi_list | array | 番剧信息 | |
