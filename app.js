@@ -144,16 +144,16 @@ app.post('/is_login', (req, res) =>
             .then(data =>
             {
                 data = data[0][0];
-                res.json({ 'code': 200, username: req.session.username, id: data['id'] });
+                res.json({ 'code': 200, 'username': req.session.username, 'id': data['id'] });
             })
     }
     else
     {
-        res.json({ 'code': 404, user: null, id: null });
+        res.json({ 'code': 404, 'user': null, 'id': null });
     }
 });
 
-app.get('/week_table', (req, res) =>
+app.post('/week_table', (req, res) =>
 {
     function day2number(day)
     {
@@ -175,6 +175,7 @@ app.get('/week_table', (req, res) =>
     db.getAll('bangumi_info', 'season', '2025.4')
         .then(data =>
         {
+            const date = new Date()
             data = data[0];
             ans = [];
             ans.push({ 'day': '周一', 'bangumi': [] });
@@ -188,7 +189,24 @@ app.get('/week_table', (req, res) =>
             {
                 ans[day2number(data[i]['screening'])]['bangumi'].push(data[i]);
             }
-            res.json({ 'data': ans });
+            res.json({ 'data': ans, 'today': date.getDay() });
+        })
+});
+
+app.post('/user_like', (req, res) =>
+{
+    const user = req.headers['user'];
+    // user = req.query['user'];
+    db.getAll('uesrlike_info', 'user', user)
+        .then(data =>
+        {
+            data = data[0];
+            likes = [];
+            for (let i = 0; i < data.length; i++)
+            {
+                likes.push(data[i]['likes']);
+            }
+            res.json({ 'likes': likes });
         })
 });
 
