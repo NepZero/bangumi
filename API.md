@@ -1,25 +1,25 @@
 # JS中请求数据
 **样例**
-```js
-let xhr = new XMLHttpRequest();
-xhr.open("post", "/login", true); //请求方式  请求地址
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.setRequestHeader('user', '001'); //设置请求头，可设置多个
-xhr.setRequestHeader('password', '123456');
-xhr.send();
-xhr.onreadystatechange = function () 
+```js 
+async function fetchData() //异步函数 对返回的数据的操作写在此函数内
 {
-    if (xhr.readyState == 4 && xhr.status == 200)
+    try
     {
-        //xhr.response是返回的json数据，要先解析
-        console.log(JSON.parse(xhr.response)["code"]);
-        //因为是异步请求，尽量在这使用数据
+        fetchA = fetch('/bangumiInfo', { method: 'POST', headers: { 'Content-Type': 'application/json','season'='2024.10'} }).then(response => response.json()); //请求头可添加多个
+        fetchB = fetch('/is_login', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
+        const responseA = await fetchA; //异步请求数据 返回响应
+        const responseB = await fetchB;
+        bangumi_informations = responseA['data'];
+        console.log(bangumi_informations);
     }
-    else if (xhr.status == 404)
+    catch (error)
     {
-        console.log("接受信息失败");
+        console.error('请求失败:', error);
     }
+
 }
+
+fetchData();
 ```
 ---
 
@@ -49,6 +49,17 @@ xhr.onreadystatechange = function ()
 |  字段   | 类型  | 内容 | 备注 |
 | :----: | :----: | :----: | :----: |
 | code  | int | 响应状态 | 403-用户已存在<br>404-注册失败<br>200-注册成功|
+
+## 登录状态接口
+**请求地址:** /is_login
+**请求方式:** post
+**请求头**: 无
+**json回复:**
+|  字段   | 类型  | 内容 | 备注 |
+| :----: | :----: | :----: | :----: |
+| code  | int | 响应状态 | 200-已登录<br>404-未登录 |
+| username | str | 当前登录账户 | 未登录为空 |
+ id | int | 登录账号id | 未登录为空 |
 
 ## 请求季度番剧接口
 **请求地址:** /bangumiInfo

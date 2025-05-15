@@ -115,7 +115,7 @@ app.post('/login', (req, res) =>
     db.getAll('login_info', 'user', user)
         .then(data =>
         {
-            data = data[0];
+            data = data[0][0];
             if (data.length == 0)
             {
                 res.json({ 'code': 403, 'error': 'Not Found' })
@@ -136,12 +136,33 @@ app.post('/login', (req, res) =>
     // res.send(`接收到的表名: ${tableName}`);
 });
 
-app.get('/test', (req, res) =>
+app.post('/is_login', (req, res) =>
 {
     if (req.session.username)
-        res.send('登录成功');
+    {
+        db.getAll('login_info', 'user', req.session.username)
+            .then(data =>
+            {
+                data = data[0][0];
+                res.json({ 'code': 200, username: req.session.username, id: data['id'] });
+            })
+    }
     else
-        res.send('登陆失败');
+    {
+        res.json({ 'code': 404, user: null, id: null });
+    }
+});
+
+
+app.get('/test', (req, res) =>
+{
+    req.session.username = 'nepnep';
+    res.send('登录成功');
+});
+app.get('/test2', (req, res) =>
+{
+    req.session.username = 'lisi';
+    res.send('登录成功');
 });
 app.get('/test1', (req, res) =>
 {

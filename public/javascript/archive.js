@@ -120,30 +120,50 @@ function Init()
     }
 }
 
-function main()
+// function main()
+// {
+//     let xhr = new XMLHttpRequest();
+//     xhr.open("post", "/bangumiInfo", true);
+//     xhr.setRequestHeader('Content-Type', 'application/json');
+//     // xhr.setRequestHeader('index', 'season');
+//     xhr.setRequestHeader('season', '2025.4');
+//     xhr.send();
+//     xhr.onreadystatechange = function ()
+//     {
+//         if (xhr.readyState == 4 && xhr.status == 200)
+//         {
+//             bangumi_informations = JSON.parse(xhr.response)["data"];
+//             console.log(JSON.parse(xhr.response));
+//             Init();
+//         }
+//         else if (xhr.status == 404)
+//         {
+//             console.log("接受信息失败");
+//         }
+//     }
+// }
+async function fetchData()
 {
-    let xhr = new XMLHttpRequest();
-    xhr.open("post", "/bangumiInfo", true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    // xhr.setRequestHeader('index', 'season');
-    xhr.setRequestHeader('season', '2025.4');
-    xhr.send();
-    xhr.onreadystatechange = function () 
+    try
     {
-        if (xhr.readyState == 4 && xhr.status == 200)
-        {
-            bangumi_informations = JSON.parse(xhr.response)["data"];
-            console.log(JSON.parse(xhr.response));
-            Init();
-        }
-        else if (xhr.status == 404)
-        {
-            console.log("接受信息失败");
-        }
+        fetchA = fetch('/bangumiInfo', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
+        fetchB = fetch('/is_login', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
+        const responseA = await fetchA;
+        const responseB = await fetchB;
+        bangumi_informations = responseA['data'];
+        console.log(bangumi_informations);
+        console.log(responseB);
+        console.log(responseC);
+        Init();
     }
+    catch (error)
+    {
+        console.error('请求失败:', error);
+    }
+
 }
 
-main();
+fetchData();
 
 
 
