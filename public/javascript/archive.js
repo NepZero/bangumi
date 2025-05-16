@@ -11,12 +11,14 @@ function Init()
     for (var i = 1; i <= bangumi_informations.length; i++)
     {
         bangumicard[i] = document.createElement('div');
-        bangumicard[i].style.width = "40%";
-        bangumicard[i].style.height = "8vw";
+        bangumicard[i].style.width = "36%";
+        bangumicard[i].style.height = "10vw";
         bangumicard[i].style.position = "relative";
-        bangumicard[i].style.backgroundColor = "red";
+        // bangumicard[i].style.backgroundColor = "red";
         bangumicard[i].style.margin = "1vw auto";
         bangumicard[i].style.borderRadius = "0.5vw";
+        bangumicard[i].style.backdropFilter = 'blur(10px)';
+        bangumicard[i].style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
         bangumicards_box.appendChild(bangumicard[i]);
 
         bangumicard_image = document.createElement('div');
@@ -25,25 +27,35 @@ function Init()
         bangumicard_image.style.position = "absolute";
         bangumicard_image.style.backgroundColor = "white";
         bangumicard_image.style.borderRadius = "0.5vw";
+        bangumicard_image.style.backgroundImage = `url("/img/${bangumi_informations[i - 1]['season']}/${bangumi_informations[i - 1]['id']}.png")`;
+        bangumicard_image.style.backgroundRepeat = 'no - repeat';
+        bangumicard_image.style.backgroundPosition = 'center';
+        bangumicard_image.style.backgroundSize = 'cover';
+        bangumicard_image.style.backdropFilter = 'blur(5px)';
+        bangumicard_image.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
         bangumicard[i].appendChild(bangumicard_image);
 
         bangumicard_header = document.createElement('div');
         bangumicard_header.style.height = "30%";
         bangumicard_header.style.width = "80%";
         bangumicard_header.style.position = "absolute";
-        bangumicard_header.style.backgroundColor = "blue";
+        // bangumicard_header.style.backgroundColor = "blue";
         bangumicard_header.style.left = "20%";
-        bangumicard_header.style.top = "5%";
+        bangumicard_header.style.top = "10%";
+        bangumicard_header.title = bangumi_informations[i - 1]["banguminame"];
         bangumicard_header.innerHTML = bangumi_informations[i - 1]["banguminame"];
         bangumicard_header.style.textAlign = "center";
         bangumicard_header.style.fontSize = "1.5vw";
+        bangumicard_header.style.overflow = 'hidden';
+        bangumicard_header.style.textOverflow = 'ellipsis';
+        bangumicard_header.style.whiteSpace = 'nowrap';
         bangumicard[i].appendChild(bangumicard_header);
 
         bangumicard_time = document.createElement('div');
         bangumicard_time.style.height = "20%";
         bangumicard_time.style.width = "20%";
         bangumicard_time.style.position = "absolute";
-        bangumicard_time.style.backgroundColor = "yellow";
+        // bangumicard_time.style.backgroundColor = "yellow";
         bangumicard_time.style.left = "20%";
         bangumicard_time.style.top = "45%";
         bangumicard_time.style.textAlign = "center";
@@ -55,7 +67,7 @@ function Init()
         bangumicard_platform.style.height = "20%";
         bangumicard_platform.style.width = "20%";
         bangumicard_platform.style.position = "absolute";
-        bangumicard_platform.style.backgroundColor = "yellow";
+        // bangumicard_platform.style.backgroundColor = "yellow";
         bangumicard_platform.style.left = "45%";
         bangumicard_platform.style.top = "45%";
         bangumicard_platform.style.textAlign = "center";
@@ -70,7 +82,7 @@ function Init()
         bangumicard_episodes.style.height = "20%";
         bangumicard_episodes.style.width = "20%";
         bangumicard_episodes.style.position = "absolute";
-        bangumicard_episodes.style.backgroundColor = "yellow";
+        // bangumicard_episodes.style.backgroundColor = "yellow";
         bangumicard_episodes.style.left = "45%";
         bangumicard_episodes.style.top = "75%";
         bangumicard_episodes.style.textAlign = "center";
@@ -82,7 +94,7 @@ function Init()
         bangumicard_isfinish.style.height = "20%";
         bangumicard_isfinish.style.width = "25%";
         bangumicard_isfinish.style.position = "absolute";
-        bangumicard_isfinish.style.backgroundColor = "yellow";
+        // bangumicard_isfinish.style.backgroundColor = "yellow";
         bangumicard_isfinish.style.left = "70%";
         bangumicard_isfinish.style.top = "45%";
         bangumicard_isfinish.style.textAlign = "center";
@@ -97,19 +109,19 @@ function Init()
         bangumicard_tags.style.height = "20%";
         bangumicard_tags.style.width = "25%";
         bangumicard_tags.style.position = "absolute";
-        bangumicard_tags.style.backgroundColor = "yellow";
+        // bangumicard_tags.style.backgroundColor = "yellow";
         bangumicard_tags.style.left = "70%";
         bangumicard_tags.style.top = "75%";
-        // bangumicard_tags.style.textAlign = "center";
-        bangumicard_tags.innerHTML = "标签: " + bangumi_informations[i - 1]["tags"];
-        bangumicard_tags.style.fontSize = "0.7vw";
+        bangumicard_tags.style.textAlign = "center";
+        bangumicard_tags.innerHTML = "标签";
+        bangumicard_tags.style.fontSize = "1vw";
         bangumicard[i].appendChild(bangumicard_tags);
 
         bangumicard_start = document.createElement('div');
         bangumicard_start.style.height = "20%";
         bangumicard_start.style.width = "20%";
         bangumicard_start.style.position = "absolute";
-        bangumicard_start.style.backgroundColor = "yellow";
+        // bangumicard_start.style.backgroundColor = "yellow";
         bangumicard_start.style.left = "20%";
         bangumicard_start.style.top = "75%";
         bangumicard_start.style.textAlign = "center";
