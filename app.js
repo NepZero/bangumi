@@ -7,7 +7,7 @@ const e = require('express');
 //创建应用对象
 const app = express();
 app.use(express.static('./public'));
-app.use(express.json());//返回JSON
+app.use(express.json());//解析JSON
 app.use(express.urlencoded({ extended: true }));//解析 form 表单的数据
 app.use(session({
     name: 'sid',   //设置cookie的name，默认值是：connect.sid
@@ -72,42 +72,32 @@ app.post('/bangumiInfo', (req, res) =>
  * 注册接口
  * code 200-注册成功    403-用户已存在  404-注册失败
  */
-app.post('/register', (req, res) =>
+app.post('/register', async (req, res) =>
 {
-    const user = req.headers['user'];
-    const password = req.headers['password'];
-    // const user = req.query['user'];
-    // const password = req.query['password'];
-    db.getAll('login_info', 'user', user)
-        .then(data =>
-        {
-            if (data.length == 0)
-            {
-                db.insert_login(user, password)
-                    .then(flag =>
-                    {
-                        if (flag == 1)
-                        {
-                            req.session.username = user;
-                            res.json({ 'code': 200 });
-                        }
-                        else
-                        {
-                            res.json({ 'code': 404, 'error': "fault" });
-                        }
-                    })
-
-            }
-            else
-            {
-                res.json({ 'code': 403, 'error': 'Already Exist' })
-            }
-        })
-    // res.send(`接收到的表名: ${tableName}`);
+    const email = req.body.email;
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+    const nickname = req.body.nickname;
+    if(confirmPassword!==password)return res.status(403).json({ code: 403, error: '密码不一致' });
+    try{
+        let result = await db.getAll('login_info', 'email', email);
+        if(result.length!==0){
+             return res.status(403).json({ code: 403, error: '该邮箱已被注册' });
+        }
+        result = await db.getAll('login_info', 'nickname', nickname);
+        if(result.length!==0){
+             return res.status(403).json({ code: 403, error: '该昵称已被注册' });
+        }
+        if(db.insert_login(nickname,email,password)) return res.status(200).json({ code: 200, message: '注册成功' });
+        else return res.status(404).json({ code: 404, error: '数据库插入错误' });
+    }catch (e) {
+        console.error('登录异常：', e);
+        return res.status(404).json({ code: 404, error: e.message || '服务器内部错误' });
+    }
 });
 /**
  * 登录接口
- * code:403-用户不存在   401用户密码错误    200登录成功    500数据库错误
+ * code:403-用户不存在   401用户密码错误    200登录成功    404数据库错误
  */
 app.post('/login', async (req, res) => {
     //在login.js中已经改用fetch重新发送 详情看该文件
@@ -117,8 +107,7 @@ app.post('/login', async (req, res) => {
     const searchType = req.body.searchType;
     try {
         const result = await db.getAll('login_info', searchType, user);
-        const data = result?.[0]?.[0]; // 安全访问数据
-
+        const data = result[0];
         if (!data) {
             return res.status(403).json({ code: 403, error: '用户不存在' });
         }
@@ -129,13 +118,13 @@ app.post('/login', async (req, res) => {
 
         // 设置 session，只存你需要的字段
         if (isKeepLoginStatus === 'on') {
-            req.session.userId = data.id;
+            req.session['userId'] = data.id;
         }
 
         return res.status(200).json({ code: 200, message: '登录成功' });
     } catch (e) {
         console.error('登录异常：', e);
-        return res.status(500).json({ code: 500, error: e.message || '服务器内部错误' });
+        return res.status(404).json({ code: 404, error: e.message || '服务器内部错误' });
     }
 });
 /**

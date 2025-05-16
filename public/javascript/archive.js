@@ -57,7 +57,7 @@ function Init()
         bangumicard_time.style.position = "absolute";
         // bangumicard_time.style.backgroundColor = "yellow";
         bangumicard_time.style.left = "20%";
-        bangumicard_time.style.top = "45%";
+        bangumicard_time.style.top = "50%";
         bangumicard_time.style.textAlign = "center";
         bangumicard_time.innerHTML = bangumi_informations[i - 1]["screening"];
         bangumicard_time.style.fontSize = "1vw";
@@ -69,7 +69,7 @@ function Init()
         bangumicard_platform.style.position = "absolute";
         // bangumicard_platform.style.backgroundColor = "yellow";
         bangumicard_platform.style.left = "45%";
-        bangumicard_platform.style.top = "45%";
+        bangumicard_platform.style.top = "50%";
         bangumicard_platform.style.textAlign = "center";
         if (bangumi_informations[i - 1]["platform"])
             bangumicard_platform.innerHTML = "大陆: " + bangumi_informations[i - 1]["platform"];
@@ -96,7 +96,7 @@ function Init()
         bangumicard_isfinish.style.position = "absolute";
         // bangumicard_isfinish.style.backgroundColor = "yellow";
         bangumicard_isfinish.style.left = "70%";
-        bangumicard_isfinish.style.top = "45%";
+        bangumicard_isfinish.style.top = "50%";
         bangumicard_isfinish.style.textAlign = "center";
         if (bangumi_informations[i - 1]["isfinish"] == 1)
             bangumicard_isfinish.innerHTML = "已完结";
