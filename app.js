@@ -118,7 +118,7 @@ app.post('/login', async (req, res) => {
 
         // 设置 session，只存你需要的字段
         if (isKeepLoginStatus === 'on') {
-            req.session.userId = data.id;
+            req.session['userId'] = data.id;
         }
 
         return res.status(200).json({ code: 200, message: '登录成功' });
