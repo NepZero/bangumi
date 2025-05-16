@@ -37,19 +37,19 @@ body, html {
 }
 
 #carousel-jumbotron .item:nth-child(1) .jumbotron {
-  background-image: url('/images/精灵幻想记.jpg');
+  background-image: url('../img/recommend/9.jpg');
 }
 
 #carousel-jumbotron .item:nth-child(2) .jumbotron {
-  background-image: url('/images/间谍过家家.jpg');
+  background-image: url('../img/recommend/33.jpg');
 }
 
 #carousel-jumbotron .item:nth-child(3) .jumbotron {
-  background-image: url('/images/咒术回战.jpg');
+  background-image: url('../img/recommend/35.jpg');
 }
 
 #carousel-jumbotron .item:nth-child(4) .jumbotron {
-  background-image: url('/images/葬送的芙莉莲.jpg');
+  background-image: url('../img/recommend/60.jpg');
 }
 
 .jumbotron h1 {
@@ -261,66 +261,76 @@ body, html {
   color: #007bff;
 }
 
+/* 番剧卡片容器样式 */
 .anime-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(178.5px, 1fr));
+    gap: 20px;
+    padding: 20px;
     display: none;  
 }
 
 .anime-container.active {
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, 178.5px);
-    gap: 20px;
-    padding: 20px;
+    display: grid;  
 }
 
-.anime-card {
-  width: 178.5px;
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
+/* 番剧卡片样式 */
+.bangumicard {
+    width: 178.5px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
 }
 
-.anime-card:hover {
-  transform: translateY(-5px);
+.bangumicard:hover {
+    transform: translateY(-5px);
 }
 
-.anime-card img {
-  width: 178.5px;
-  height: 212.41px;
-  object-fit: cover;
+.bangumicard img {
+    width: 178.5px;
+    height: 212.41px;
+    object-fit: cover;
 }
 
-.anime-card h3 {
-  padding: 8px 10px;
-  margin: 0;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  color: #333;
+.card-info {
+    padding: 10px;
 }
 
-.anime-card .update-time {
-  padding: 0 10px 8px 10px;
-  margin: 0;
-  font-size: 12px;
-  text-align: center;
-  color: #666;
+.anime-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.update-time {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+}
+
+.episodes, .status {
+    font-size: 12px;
+    color: #999;
+    margin: 2px 0;
 }
 
 /*页脚样式*/
 .site-footer {
-  background-color: #2c3e50;
-  color: #ecf0f1;
-  padding: 20px 0;  
-  margin-top: 30px; 
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px 0;
+    margin-top: 30px;
+    width: 100%;
 }
 
 .footer-content {
-  display: flex;
-  justify-content: space-between;
-  gap: 60px;  
-  margin-bottom: 15px;  
+    display: flex;
+    justify-content: space-between;
+    gap: 60px;
+    margin-bottom: 15px;
 }
 
 .footer-section {
@@ -357,9 +367,9 @@ body, html {
 }
 
 .footer-bottom {
-  padding-top: 10px;  
-  border-top: 1px solid #34495e;
-  text-align: center;
+    text-align: center;
+    padding-top: 10px;
+    border-top: 1px solid #34495e;
 }
 
 .footer-bottom p {
