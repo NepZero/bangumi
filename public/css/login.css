@@ -67,7 +67,7 @@ nav ul li {
 
 
 
-.button-group {
+.button-group,#welcomeArea {
     position: absolute;
     right: 2vw;
 }
@@ -78,7 +78,7 @@ nav ul li {
     border: none;
     border-radius: 15px;
     padding: 4px 12px;
-    font-size: 0.8vw;
+    font-size: 1vw;
     cursor: pointer;
 }
 
@@ -88,7 +88,7 @@ nav ul li {
     border: 1px solid #fd6b9a;
     border-radius: 15px;
     padding: 4px 12px;
-    font-size: 0.8vw;
+    font-size: 1vw;
     margin-left: 5px;
     cursor: pointer;
 }
@@ -219,14 +219,6 @@ nav ul li {
     border: 1px solid #ddd;
     border-radius: 3px;
     box-sizing: border-box;
-}
-
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    font-size: 14px;
-    color: #666;
 }
 
 .login-button {

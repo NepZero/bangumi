@@ -79,7 +79,7 @@ nav ul li {
     border: none;
     border-radius: 15px;
     padding: 4px 12px;
-    font-size: 0.8vw;
+    font-size: 1vw;
     cursor: pointer;
 }
 
@@ -89,7 +89,7 @@ nav ul li {
     border: 1px solid #fd6b9a;
     border-radius: 15px;
     padding: 4px 12px;
-    font-size: 0.8vw;
+    font-size: 1vw;
     margin-left: 5px;
     cursor: pointer;
 }

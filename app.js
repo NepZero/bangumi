@@ -31,24 +31,30 @@ app.get('/index', (req, res) =>
 {
     res.sendFile(__dirname + '/public/html/index.html')
 });
-app.get('/login', (req, res) =>
-{
-    res.sendFile(__dirname + '/public/html/login.html')
+app.get('/login', (req, res) => {
+    if (req.session.userId && req.session.nickname) {
+        res.redirect('/index');
+    } else {
+        // 返回登录页面
+        res.sendFile(__dirname + '/public/html/login.html');
+    }
 });
 app.get('/favlist', (req, res) =>
 {
     res.sendFile(__dirname + '/public/html/favlist.html')
 });
-app.get('/register', (req, res) =>
-{
-    res.sendFile(__dirname + '/public/html/register.html')
+app.get('/register', (req, res) => {
+    if (req.session.userId && req.session.nickname) {
+        res.redirect('/index');
+    } else {
+        // 返回注册页面
+        res.sendFile(__dirname + '/public/html/register.html');
+    }
 });
 app.get('/', (req, res) =>
 {
     res.redirect('/index');
 });
-
-
 /**
  * 请求季度番剧信息的接口
  */
@@ -103,7 +109,6 @@ app.post('/login', async (req, res) => {
     //在login.js中已经改用fetch重新发送 详情看该文件
     const user = req.body.user;
     const password = req.body.password;
-    const isKeepLoginStatus = req.body.checkbox;
     const searchType = req.body.searchType;
     try {
         const result = await db.getAll('login_info', searchType, user);
@@ -115,12 +120,8 @@ app.post('/login', async (req, res) => {
         if (data.password !== password) {
             return res.status(401).json({ code: 401, error: '密码错误' });
         }
-
-        // 设置 session，只存你需要的字段
-        if (isKeepLoginStatus === 'on') {
-            req.session['userId'] = data.id;
-        }
-
+        req.session['userId'] = data.id;
+        req.session['nickname'] = data.nickname;
         return res.status(200).json({ code: 200, message: '登录成功' });
     } catch (e) {
         console.error('登录异常：', e);
@@ -132,28 +133,30 @@ app.post('/login', async (req, res) => {
  */
 app.post('/is_login', (req, res) =>
 {
-    if (req.session.username)
-    {
-        db.getAll('login_info', 'user', req.session.username)
-            .then(data =>
-            {
-                if (data.length == 0)
-                {
-                    res.json({ 'code': 403, 'username': null, 'id': null });
-                }
-                else
-                {
-                    data = data[0];
-                    res.json({ 'code': 200, 'username': req.session.username, 'id': data['id'] });
-                }
-
-            })
-    }
-    else
-    {
-        res.json({ 'code': 404, 'user': null, 'id': null });
+    if (req.session['userId'] && req.session['nickname']) {
+        return res.status(200).json({ code: 200, nickname: req.session.nickname });
+    } else {
+        return res.status(401).json({ code: 401, message: '未登录' });
     }
 });
+/**
+ * 登出接口，清除登录信息
+ */
+app.post('/log_out', (req, res) => {
+    if (req.session.userId && req.session.nickname) {
+        req.session.destroy(err => {
+            if (err) {
+                console.error('注销失败:', err);
+                return res.status(500).send('注销失败');
+            }
+            res.clearCookie('connect.sid');
+            return res.redirect('/index');
+        });
+    } else {
+        return res.redirect('/index');
+    }
+});
+
 /**
  * 返回周番剧信息
  */
