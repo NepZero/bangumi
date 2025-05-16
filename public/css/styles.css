@@ -37,19 +37,19 @@ body, html {
 }
 
 #carousel-jumbotron .item:nth-child(1) .jumbotron {
-  background-image: url('../images/精灵幻想记.jpg');
+  background-image: url('/images/精灵幻想记.jpg');
 }
 
 #carousel-jumbotron .item:nth-child(2) .jumbotron {
-  background-image: url('../images/间谍过家家.jpg');
+  background-image: url('/images/间谍过家家.jpg');
 }
 
 #carousel-jumbotron .item:nth-child(3) .jumbotron {
-  background-image: url('../images/咒术回战.jpg');
+  background-image: url('/images/咒术回战.jpg');
 }
 
 #carousel-jumbotron .item:nth-child(4) .jumbotron {
-  background-image: url('../images/葬送的芙莉莲.jpg');
+  background-image: url('/images/葬送的芙莉莲.jpg');
 }
 
 .jumbotron h1 {
