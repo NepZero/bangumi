@@ -34,6 +34,7 @@
       <li data-target="#carousel-jumbotron" data-slide-to="3"></li>
     </ol>
 
+    <!-- 轮播项目 -->
     <div class="carousel-inner">
       <div class="item active">
         <div class="jumbotron">
@@ -47,7 +48,7 @@
           </div>
         </div>
       </div>
-
+      
       <div class="item">
         <div class="jumbotron">
           <h1>间谍过家家 第二季</h1>
@@ -87,147 +88,152 @@
         </div>
       </div>
 
-      <a class="left carousel-control" href="#carousel-jumbotron" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-      </a>
-      <a class="right carousel-control" href="#carousel-jumbotron" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-      </a>
+    <!-- 左右切换按钮 -->
+    <a class="left carousel-control" href="#carousel-jumbotron" data-slide="prev">
+      <div class="control-circle">
+        <img src="https://cn.bing.com/rp/R1dUsywBSe_0cXxtsfENVYupgkY.svg" class="arrow-left" alt="Previous">
+      </div>
+    </a>
+    <a class="right carousel-control" href="#carousel-jumbotron" data-slide="next">
+      <div class="control-circle">
+        <img src="https://cn.bing.com/rp/R1dUsywBSe_0cXxtsfENVYupgkY.svg" class="arrow-right" alt="Next">
+      </div>
+    </a>
+  </div>
+
+  <div class="schedule-section">
+    <div class="schedule-header">
+      <h2 class="schedule-title">每周推荐</h2>
+      <ul class="week-nav">
+        <li class="active"><a href="#monday">周一</a></li>
+        <li><a href="#tuesday">周二</a></li>
+        <li><a href="#wednesday">周三</a></li>
+        <li><a href="#thursday">周四</a></li>
+        <li><a href="#friday">周五</a></li>
+        <li><a href="#saturday">周六</a></li>
+        <li><a href="#sunday">周日</a></li>
+      </ul>
     </div>
 
-    <div class="schedule-section">
-      <div class="schedule-header">
-        <h2 class="schedule-title">每周推荐</h2>
-        <ul class="week-nav">
-          <li class="active"><a href="#monday">周一</a></li>
-          <li><a href="#tuesday">周二</a></li>
-          <li><a href="#wednesday">周三</a></li>
-          <li><a href="#thursday">周四</a></li>
-          <li><a href="#friday">周五</a></li>
-          <li><a href="#saturday">周六</a></li>
-          <li><a href="#sunday">周日</a></li>
-        </ul>
+    <div class="anime-container active" id="monday">
+      <div class="anime-card">
+        <img src="../images/推荐1.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
       </div>
-
-      <div class="anime-container active" id="monday">
-        <div class="anime-card">
-          <img src="../images/推荐1.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-        <div class="anime-card">
-          <img src="../images/推荐2.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-      </div>
-
-      <div class="anime-container" id="tuesday">
-        <div class="anime-card">
-          <img src="../images/推荐3.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-        <div class="anime-card">
-          <img src="../images/推荐2.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-      </div>
-
-      <div class="anime-container" id="wednesday">
-        <div class="anime-card">
-          <img src="../images/推荐1.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-        <div class="anime-card">
-          <img src="../images/推荐2.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-      </div>
-
-      <div class="anime-container" id="thursday">
-        <div class="anime-card">
-          <img src="../images/推荐1.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-        <div class="anime-card">
-          <img src="../images/推荐2.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-      </div>
-
-      <div class="anime-container" id="friday">
-        <div class="anime-card">
-          <img src="../images/推荐1.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-        <div class="anime-card">
-          <img src="../images/推荐2.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-      </div>
-
-      <div class="anime-container" id="saturday">
-        <div class="anime-card">
-          <img src="../images/推荐1.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-        <div class="anime-card">
-          <img src="../images/推荐2.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-      </div>
-
-      <div class="anime-container" id="sunday">
-        <div class="anime-card">
-          <img src="../images/推荐1.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
-        <div class="anime-card">
-          <img src="../images/推荐2.jpg" alt="番剧封面">
-          <h3>番剧标题</h3>
-          <p class="update-time">每周一更新</p>
-        </div>
+      <div class="anime-card">
+        <img src="../images/推荐2.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
       </div>
     </div>
 
-    <footer class="site-footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-section">
-            <h3>关于我们</h3>
-            <p>Bangumi 是一个专注于动漫内容的平台，为用户提供最新最全的动漫资讯。</p>
-          </div>
-          <div class="footer-section">
-            <h3>快速链接</h3>
-            <ul>
-              <li><a href="#">首页</a></li>
-              <li><a href="#">番剧列表</a></li>
-              <li><a href="#">更新时间表</a></li>
-              <li><a href="#">关于我们</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h3>联系我们</h3>
-            <p>Email: hualiciallo@qq.com</p>
-            <p>微博：@花梨ciallo</p>
-          </div>
+    <div class="anime-container" id="tuesday">
+      <div class="anime-card">
+        <img src="../images/推荐3.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
+      </div>
+      <div class="anime-card">
+        <img src="../images/推荐2.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
+      </div>
+    </div>
+
+    <div class="anime-container" id="wednesday">
+      <div class="anime-card">
+        <img src="../images/推荐1.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
+      </div>
+      <div class="anime-card">
+        <img src="../images/推荐2.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
+      </div>
+    </div>
+
+    <div class="anime-container" id="thursday">
+      <div class="anime-card">
+        <img src="../images/推荐1.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
+      </div>
+      <div class="anime-card">
+        <img src="../images/推荐2.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
+      </div>
+    </div>
+
+    <div class="anime-container" id="friday">
+      <div class="anime-card">
+        <img src="../images/推荐1.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
+      </div>
+      <div class="anime-card">
+        <img src="../images/推荐2.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
+      </div>
+    </div>
+    
+    <div class="anime-container" id="saturday">
+      <div class="anime-card">
+        <img src="../images/推荐1.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
+      </div>
+      <div class="anime-card">
+        <img src="../images/推荐2.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
+      </div>
+    </div>
+
+    <div class="anime-container" id="sunday">
+      <div class="anime-card">
+        <img src="../images/推荐1.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
+      </div>
+      <div class="anime-card">
+        <img src="../images/推荐2.jpg" alt="番剧封面">
+        <h3>番剧标题</h3>
+        <p class="update-time">每周一更新</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>关于我们</h3>
+          <p>Bangumi 是一个专注于动漫内容的平台，为用户提供最新最全的动漫资讯。</p>
         </div>
-        <div class="footer-bottom">
-          <p>&copy; 2024 Bangumi. All rights reserved.</p>
+        <div class="footer-section">
+          <h3>快速链接</h3>
+          <ul>
+            <li><a href="#">首页</a></li>
+            <li><a href="#">番剧列表</a></li>
+            <li><a href="#">更新时间表</a></li>
+            <li><a href="#">关于我们</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>联系我们</h3>
+          <p>Email: hualiciallo@qq.com</p>
+          <p>微博：@花梨ciallo</p>
         </div>
       </div>
-    </footer>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Bangumi. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
     <script src="/javascript/jquery-3.7.1.min.js"></script>
     <script src="/javascript/bootstrap.js"></script>
