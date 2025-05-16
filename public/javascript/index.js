@@ -15,3 +15,14 @@ async function fetchData() //异步函数 对返回的数据的操作写在此�
 }
 
 fetchData();
+
+$(document).ready(function() {
+    $('.week-nav li a').click(function(e) {
+        e.preventDefault();
+        $('.week-nav li').removeClass('active');
+        $(this).parent('li').addClass('active');
+        var targetId = $(this).attr('href');
+        $('.anime-container').removeClass('active').hide();
+        $(targetId).addClass('active').fadeIn();
+    });
+});

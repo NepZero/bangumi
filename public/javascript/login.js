@@ -1,6 +1,5 @@
 const form = document.getElementById('loginForm');
 const msg = document.getElementById('msg');
-const loginBtn = document.getElementById('loginBtn');
 function isEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -12,7 +11,6 @@ form.addEventListener('submit', async (event) => {
     const password=formData.get('password');
     const checkbox= formData.get('checkbox'); // 如果勾选，值是 "on"，否则是 null
     const searchType = isEmail(user) ? 'email' : 'nickname';
-    loginBtn.disable=true;//防止重复提交
     const payload = {
         user:user,
         password:password,
@@ -22,26 +20,24 @@ form.addEventListener('submit', async (event) => {
 
     try {
         const response = await fetch('/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
         });
 
         const result = await response.json();
 
         if (result.code === 200) {
-            msg.style.color = 'green';
-            msg.textContent = '登录成功！3秒后跳转首页...';
-            setTimeout(() => {
+          msg.style.color = 'green';
+          msg.textContent = '登录成功！3秒后跳转首页...';
+          setTimeout(() => {
             window.location.href = '/index';  // 登录成功跳首页
           }, 3000);
         } else {
-            loginBtn.disable=false;
-            msg.style.color = 'red';
-            msg.textContent = `错误：${result.error || '未知错误'}`;
+          msg.style.color = 'red';
+          msg.textContent = `错误：${result.error || '未知错误'}`;
         }
       } catch (error) {
-        loginBtn.disable=false;
         msg.style.color = 'red';
         msg.textContent = '请求异常，请稍后重试';
         console.error(error);
