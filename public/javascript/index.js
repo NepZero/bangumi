@@ -25,4 +25,13 @@ $(document).ready(function() {
         $('.anime-container').removeClass('active').hide();
         $(targetId).addClass('active').fadeIn();
     });
+
+    var $carousel = $('#carousel-jumbotron');
+    $carousel.carousel({
+        interval: 5000
+    });
+    
+    $('.carousel-control').click(function() {
+        $carousel.carousel('cycle');
+    });
 });

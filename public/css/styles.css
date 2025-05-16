@@ -6,7 +6,6 @@ body, html {
 .jumbotron {
   width: 100%;
   height: 100vh; 
-  background-image: url('../images/精灵幻想记.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -14,6 +13,22 @@ body, html {
   position: relative;
   margin-bottom: 0; 
   padding: 0; 
+}
+
+#carousel-jumbotron .item:nth-child(1) .jumbotron {
+  background-image: url('../images/精灵幻想记.jpg');
+}
+
+#carousel-jumbotron .item:nth-child(2) .jumbotron {
+  background-image: url('../images/间谍过家家.jpg');
+}
+
+#carousel-jumbotron .item:nth-child(3) .jumbotron {
+  background-image: url('../images/咒术回战.jpg');
+}
+
+#carousel-jumbotron .item:nth-child(4) .jumbotron {
+  background-image: url('../images/葬送的芙莉莲.jpg');
 }
 
 .jumbotron h1 {
@@ -42,6 +57,46 @@ body, html {
   margin: 0;
   padding: 5px 10px;
 }
+
+.carousel {
+  position: relative;
+  height: 100vh;
+}
+
+.carousel-inner {
+  height: 100%;
+}
+
+.carousel-inner .item {
+  height: 100%;
+}
+
+.carousel-control {
+  background-image: none !important; 
+  opacity: 0; 
+  transition: opacity 0.3s ease;
+}
+
+.carousel:hover .carousel-control {
+  opacity: 0.5;  
+}
+
+.carousel-control:hover {
+  opacity: 0.9 !important; 
+}
+
+.carousel-indicators {
+  bottom: 30px;  
+}
+
+.carousel-indicators li {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.carousel-indicators .active {
+  background-color: #fff;
+}
+
 /*导航图样式*/
 .navbar {
   margin-bottom: 0;
