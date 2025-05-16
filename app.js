@@ -31,10 +31,13 @@ app.get('/index', (req, res) =>
 {
     res.sendFile(__dirname + '/public/html/index.html')
 });
-app.get('/login', (req, res) => {
-    if (req.session.userId && req.session.nickname) {
+app.get('/login', (req, res) =>
+{
+    if (req.session.userId && req.session.nickname)
+    {
         res.redirect('/index');
-    } else {
+    } else
+    {
         // 返回登录页面
         res.sendFile(__dirname + '/public/html/login.html');
     }
@@ -43,10 +46,13 @@ app.get('/favlist', (req, res) =>
 {
     res.sendFile(__dirname + '/public/html/favlist.html')
 });
-app.get('/register', (req, res) => {
-    if (req.session.userId && req.session.nickname) {
+app.get('/register', (req, res) =>
+{
+    if (req.session.userId && req.session.nickname)
+    {
         res.redirect('/index');
-    } else {
+    } else
+    {
         // 返回注册页面
         res.sendFile(__dirname + '/public/html/register.html');
     }
@@ -84,19 +90,23 @@ app.post('/register', async (req, res) =>
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
     const nickname = req.body.nickname;
-    if(confirmPassword!==password)return res.status(403).json({ code: 403, error: '密码不一致' });
-    try{
+    if (confirmPassword !== password) return res.status(403).json({ code: 403, error: '密码不一致' });
+    try
+    {
         let result = await db.getAll('login_info', 'email', email);
-        if(result.length!==0){
-             return res.status(403).json({ code: 403, error: '该邮箱已被注册' });
+        if (result.length !== 0)
+        {
+            return res.status(403).json({ code: 403, error: '该邮箱已被注册' });
         }
         result = await db.getAll('login_info', 'nickname', nickname);
-        if(result.length!==0){
-             return res.status(403).json({ code: 403, error: '该昵称已被注册' });
+        if (result.length !== 0)
+        {
+            return res.status(403).json({ code: 403, error: '该昵称已被注册' });
         }
-        if(db.insert_login(nickname,email,password)) return res.status(200).json({ code: 200, message: '注册成功' });
+        if (db.insert_login(nickname, email, password)) return res.status(200).json({ code: 200, message: '注册成功' });
         else return res.status(404).json({ code: 404, error: '数据库插入错误' });
-    }catch (e) {
+    } catch (e)
+    {
         console.error('登录异常：', e);
         return res.status(404).json({ code: 404, error: e.message || '服务器内部错误' });
     }
@@ -105,25 +115,30 @@ app.post('/register', async (req, res) =>
  * 登录接口
  * code:403-用户不存在   401用户密码错误    200登录成功    404数据库错误
  */
-app.post('/login', async (req, res) => {
+app.post('/login', async (req, res) =>
+{
     //在login.js中已经改用fetch重新发送 详情看该文件
     const user = req.body.user;
     const password = req.body.password;
     const searchType = req.body.searchType;
-    try {
+    try
+    {
         const result = await db.getAll('login_info', searchType, user);
         const data = result[0];
-        if (!data) {
+        if (!data)
+        {
             return res.status(403).json({ code: 403, error: '用户不存在' });
         }
 
-        if (data.password !== password) {
+        if (data.password !== password)
+        {
             return res.status(401).json({ code: 401, error: '密码错误' });
         }
         req.session['userId'] = data.id;
         req.session['nickname'] = data.nickname;
         return res.status(200).json({ code: 200, message: '登录成功' });
-    } catch (e) {
+    } catch (e)
+    {
         console.error('登录异常：', e);
         return res.status(404).json({ code: 404, error: e.message || '服务器内部错误' });
     }
@@ -133,26 +148,33 @@ app.post('/login', async (req, res) => {
  */
 app.post('/is_login', (req, res) =>
 {
-    if (req.session['userId'] && req.session['nickname']) {
+    if (req.session['userId'] && req.session['nickname'])
+    {
         return res.status(200).json({ code: 200, nickname: req.session.nickname });
-    } else {
+    } else
+    {
         return res.status(401).json({ code: 401, message: '未登录' });
     }
 });
 /**
  * 登出接口，清除登录信息
  */
-app.post('/log_out', (req, res) => {
-    if (req.session.userId && req.session.nickname) {
-        req.session.destroy(err => {
-            if (err) {
+app.post('/log_out', (req, res) =>
+{
+    if (req.session.userId && req.session.nickname)
+    {
+        req.session.destroy(err =>
+        {
+            if (err)
+            {
                 console.error('注销失败:', err);
                 return res.status(500).send('注销失败');
             }
             res.clearCookie('connect.sid');
             return res.redirect('/index');
         });
-    } else {
+    } else
+    {
         return res.redirect('/index');
     }
 });
