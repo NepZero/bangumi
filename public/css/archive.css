@@ -34,7 +34,7 @@ nav ul {
 nav ul li {
     display: inline-block;
     /* 需要改为块级元素才能正确应用 padding 和背景 */
-    margin-right: 1.5vw;
+    margin-right: 1.8vw;
     padding-left: 2vw;
     /* 为图标留出空间 */
     font-size: 1.2vw;
@@ -50,12 +50,11 @@ nav ul li {
 }
 
 /* 如果图标和文字需要间距 */
-nav ul li::after {
+/* nav ul li::after {
     content: "";
     display: inline-block;
     width: 0.8vw;
-    /* 图标和文字之间的间距 */
-}
+} */
 
 
 

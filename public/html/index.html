@@ -5,23 +5,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bangumi</title>
+  <title>Bungumi</title>
   <link rel="stylesheet" href="/css/bootstrap.css">
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/index.css">
 </head>
 
 <body>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Bangumi</a>
-      </div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">首页</a></li>
-        <li><a href="#">番剧</a></li>
-        <li><a href="#">时间表</a></li>
-        <li><a href="#">索引</a></li>
-      </ul>
+  <nav>
+    <ul>
+      <li style="color:palevioletred"><a href="/index" style="text-decoration: none;color: inherit">bangumi</a></li>
+      <!-- <li><a href="/index">首页</a></li> -->
+      <li><a href="/favlist" style="text-decoration: none;color: inherit">收藏列表</a></li>
+      <li><a href="" style="text-decoration: none;color: inherit">番剧索引</a></li>
+      <li><a href="/archive" style="text-decoration: none;color: inherit">季度信息</a></li>
+    </ul>
+    <div class="button-group">
+      <button class="button-primary"><a href="/login" style="text-decoration: none;color: inherit">登录</a></button>
+      <button class="button-secondary"><a href="/register" style="text-decoration: none;color: inherit">注册</a></button>
     </div>
   </nav>
 
