@@ -55,8 +55,6 @@ app.get('/', (req, res) =>
 {
     res.redirect('/index');
 });
-
-
 /**
  * 请求季度番剧信息的接口
  */
@@ -111,7 +109,6 @@ app.post('/login', async (req, res) => {
     //在login.js中已经改用fetch重新发送 详情看该文件
     const user = req.body.user;
     const password = req.body.password;
-    const isKeepLoginStatus = req.body.checkbox;
     const searchType = req.body.searchType;
     try {
         const result = await db.getAll('login_info', searchType, user);
@@ -123,13 +120,8 @@ app.post('/login', async (req, res) => {
         if (data.password !== password) {
             return res.status(401).json({ code: 401, error: '密码错误' });
         }
-
-        // 设置 session，只存你需要的字段
-        //if (isKeepLoginStatus === 'on') {
-            req.session['userId'] = data.id;
-            req.session['nickname'] = data.nickname;
-        //}
-
+        req.session['userId'] = data.id;
+        req.session['nickname'] = data.nickname;
         return res.status(200).json({ code: 200, message: '登录成功' });
     } catch (e) {
         console.error('登录异常：', e);
