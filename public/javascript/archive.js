@@ -2,9 +2,10 @@ var bangumi_informations = [
     { "name": "精灵幻想记 第二季", "screening": "周二00:30", "platform": "bilibili", "start_time": "2024.10.7", "episodes": 24, "isfinish": 1, "tags": "奇幻 / 冒险 / 战斗 / 后宫 / 穿越异世界" },
     { "name": "重生大小姐正在攻略龙帝殿下", "screening": "周三12:30", "platform": null, "start_time": "2024.1.7", "episodes": 12, "isfinish": 0, "tags": "奇幻 / 冒险 / 战斗 / 后宫 / 穿越异世界" }
 ]
+var user = {};
 var bangumicards_box = document.getElementsByClassName("bangumicards-box")[0];
 var bangumicard = [];
-
+bangumicard_like = [];
 
 function Init()
 {
@@ -14,12 +15,40 @@ function Init()
         bangumicard[i].style.width = "36%";
         bangumicard[i].style.height = "10vw";
         bangumicard[i].style.position = "relative";
-        // bangumicard[i].style.backgroundColor = "red";
         bangumicard[i].style.margin = "1vw auto";
         bangumicard[i].style.borderRadius = "0.5vw";
         bangumicard[i].style.backdropFilter = 'blur(10px)';
         bangumicard[i].style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
         bangumicards_box.appendChild(bangumicard[i]);
+
+        bangumicard_like[i] = document.createElement('div');
+        bangumicard_like[i].style.height = '1.5vw';
+        bangumicard_like[i].style.width = '1.5vw';
+        bangumicard_like[i].style.position = 'absolute';
+        bangumicard_like[i].style.right = '1%';
+        bangumicard_like[i].style.backgroundImage = 'url(/img/like.png)'
+        bangumicard_like[i].style.backgroundRepeat = 'no-repeat';
+        bangumicard_like[i].style.backgroundPosition = 'center';
+        bangumicard_like[i].style.backgroundSize = 'cover';
+        bangumicard_like[i].style.cursor = 'pointer';
+        bangumicard[i].appendChild(bangumicard_like[i]);
+        bangumicard_like[i].onmouseover = function ()
+        {
+            this.style.filter = 'brightness(1.5)';
+        }
+        bangumicard_like[i].onmouseout = function ()
+        {
+            this.style.filter = '';
+        }
+        bangumicard_like[i].onclick = function ()
+        {
+            if (user['code'] == 401)
+            {
+                console.log(11);
+            }
+            
+        }
+
 
         bangumicard_image = document.createElement('div');
         bangumicard_image.style.height = "100%";
@@ -37,10 +66,10 @@ function Init()
 
         bangumicard_header = document.createElement('div');
         bangumicard_header.style.height = "30%";
-        bangumicard_header.style.width = "80%";
+        bangumicard_header.style.width = "70%";
         bangumicard_header.style.position = "absolute";
         // bangumicard_header.style.backgroundColor = "blue";
-        bangumicard_header.style.left = "20%";
+        bangumicard_header.style.left = "25%";
         bangumicard_header.style.top = "10%";
         bangumicard_header.title = bangumi_informations[i - 1]["banguminame"];
         bangumicard_header.innerHTML = bangumi_informations[i - 1]["banguminame"];
@@ -129,6 +158,8 @@ function Init()
         bangumicard_start.style.fontSize = "1vw";
         bangumicard[i].appendChild(bangumicard_start);
 
+
+
     }
 }
 
@@ -159,7 +190,7 @@ async function fetchData()
     try
     {
         fetchA = fetch('/bangumiInfo', { method: 'POST', headers: { 'Content-Type': 'application/json', 'season': '2025.4' } }).then(response => response.json());
-        fetchB = fetch('/userinfo_update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ 'user': 'nepnep', 'user_id': 1, 'code': 100, 'if_insert': 0, 'bangumi_id': 5 }) }).then(response => response.json());
+        fetchB = fetch('/is_login', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
         fetchC = fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json', 'user': 'nepnep' } }).then(response => response.json());
         const responseA = await fetchA;
         const responseB = await fetchB;
@@ -167,6 +198,7 @@ async function fetchData()
         bangumi_informations = responseA['data'];
         console.log(bangumi_informations);
         console.log(responseB);
+        user = responseB;
         console.log(responseC['bangumi_list']);
         Init();
     }
@@ -174,10 +206,12 @@ async function fetchData()
     {
         console.error('请求失败:', error);
     }
-    
+
 }
 
 fetchData();
+
+
 
 
 
