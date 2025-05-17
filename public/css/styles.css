@@ -100,7 +100,7 @@ body, html {
   background-image: none !important;
   opacity: 0;
   transition: opacity 0.3s ease;
-  width: 10%; /* 调整控制按钮的宽度 */
+  width: 10%; 
 }
 
 .control-circle {
@@ -212,110 +212,6 @@ body, html {
   background-color: rgba(248, 248, 248, 0.8);
   color: rgba(51, 51, 51, 0.9);
 }
-/*每周推荐样式*/
-.schedule-section {
-  padding: 20px;
-  background-color:white;
-}
-
-.schedule-header {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  margin-bottom: 20px;
-}
-
-.schedule-title {
-  font-size: 24px;
-  margin: 0;
-  padding: 10px 0;
-  color: #333;
-  white-space: nowrap;
-}
-
-.week-nav {
-  flex: 1;
-  display: flex;
-  justify-content: flex-start;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-bottom: 1px solid greenyellow;
-}
-
-.week-nav li {
-  margin: 0 10px;
-}
-
-.week-nav li a {
-  display: block;
-  padding: 10px 20px;
-  color: purple;
-  text-decoration: none;
-  border-bottom: 3px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.week-nav li.active a {
-  border-bottom-color: #007bff;
-  color: #007bff;
-}
-
-/* 番剧卡片容器样式 */
-.anime-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(178.5px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    display: none;  
-}
-
-.anime-container.active {
-    display: grid;  
-}
-
-/* 番剧卡片样式 */
-.bangumicard {
-    width: 178.5px;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.bangumicard:hover {
-    transform: translateY(-5px);
-}
-
-.bangumicard img {
-    width: 178.5px;
-    height: 212.41px;
-    object-fit: cover;
-}
-
-.card-info {
-    padding: 10px;
-}
-
-.anime-title {
-    font-size: 14px;
-    font-weight: bold;
-    margin: 0 0 5px 0;
-    color: #333;
-}
-
-.update-time {
-    font-size: 12px;
-    color: #666;
-    margin: 0;
-}
-
-.episodes, .status {
-    font-size: 12px;
-    color: #999;
-    margin: 2px 0;
-}
 
 /*页脚样式*/
 .site-footer {
@@ -374,4 +270,161 @@ body, html {
 
 .footer-bottom p {
   font-size: 12px;  
+}
+
+.loading, .no-data, .error {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    color: #666;
+}
+
+.error {
+    color: #dc3545;
+}
+
+.anime-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(178.5px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    min-height: 300px; 
+}
+
+
+.bangumicard {
+    width: 178.5px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.bangumicard:hover {
+    transform: translateY(-5px);
+}
+
+.bangumicard img[src="/images/default-cover.jpg"] {
+    filter: grayscale(1);
+    opacity: 0.8;
+}
+
+/* 每周推荐部分样式 */
+.schedule-section {
+    padding: 20px;
+    background-color: #fff;
+    margin-top: 30px;
+}
+
+.schedule-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.schedule-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.week-nav {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 20px;
+}
+
+.week-nav li a {
+    color: #666;
+    text-decoration: none;
+    padding: 10px 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.week-nav li.active a {
+    color: #ff69b4;
+}
+
+.week-nav li.active a::after {
+    content: '';
+    position: absolute;
+    bottom: -11px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ff69b4;
+}
+
+.week-nav li a:hover {
+    color: #ff69b4;
+}
+
+.card-cover {
+    position: relative;
+    width: 100%;
+    height: 212.41px;
+    overflow: hidden;
+}
+
+.card-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-hover {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.bangumicard:hover .card-hover {
+    opacity: 1;
+}
+
+.card-tags {
+    display: flex;
+    gap: 8px;
+}
+
+.start-tag, .platform-tag {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    background: rgba(255,255,255,0.9);
+    color: #666;
+}
+
+.card-info {
+    padding: 8px 10px;
+}
+
+.anime-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.update-info {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #666;
+    text-align: center;
 }
