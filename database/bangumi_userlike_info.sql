@@ -16,27 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `uesrlike_info`
+-- Table structure for table `userlike_info`
 --
 
-DROP TABLE IF EXISTS `uesrlike_info`;
+DROP TABLE IF EXISTS `userlike_info`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `uesrlike_info` (
+CREATE TABLE `userlike_info` (
   `user_id` int DEFAULT NULL,
   `user` varchar(15) DEFAULT NULL,
-  `likes` int DEFAULT NULL
+  `likes` int DEFAULT NULL,
+  UNIQUE KEY `userid_like` (`user_id`,`likes`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `uesrlike_info`
+-- Dumping data for table `userlike_info`
 --
 
-LOCK TABLES `uesrlike_info` WRITE;
-/*!40000 ALTER TABLE `uesrlike_info` DISABLE KEYS */;
-INSERT INTO `uesrlike_info` VALUES (1,'nepnep',1),(1,'nepnep',3),(1,'nepnep',4),(1,'nepnep',5),(1,'nepnep',6),(1,'nepnep',7),(1,'nepnep',10),(1,'nepnep',14),(1,'nepnep',15),(1,'nepnep',16),(1,'nepnep',19),(1,'nepnep',20),(1,'nepnep',22),(1,'nepnep',25),(1,'nepnep',28),(1,'nepnep',30);
-/*!40000 ALTER TABLE `uesrlike_info` ENABLE KEYS */;
+LOCK TABLES `userlike_info` WRITE;
+/*!40000 ALTER TABLE `userlike_info` DISABLE KEYS */;
+INSERT INTO `userlike_info` VALUES (1,'nepnep',3),(1,'nepnep',4),(1,'nepnep',6),(1,'nepnep',7),(1,'nepnep',10),(1,'nepnep',14),(1,'nepnep',15),(1,'nepnep',16),(1,'nepnep',19),(1,'nepnep',20),(1,'nepnep',22),(1,'nepnep',25),(1,'nepnep',28),(1,'nepnep',30);
+/*!40000 ALTER TABLE `userlike_info` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-14 19:55:49
+-- Dump completed on 2025-05-17 12:01:51

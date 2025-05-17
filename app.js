@@ -150,7 +150,7 @@ app.post('/is_login', (req, res) =>
 {
     if (req.session['userId'] && req.session['nickname'])
     {
-        return res.status(200).json({ code: 200, nickname: req.session.nickname });
+        return res.status(200).json({ code: 200, nickname: req.session.nickname, user_id: req.userId });
     } else
     {
         return res.status(401).json({ code: 401, message: '未登录' });
@@ -243,6 +243,27 @@ app.post('/daily_recommend', (req, res) =>
         {
             res.json({ 'bangumi_list': data });
         })
+});
+/**
+ * 对用户指定行为进行数据更新
+ * code 100-对用户收藏列表更新
+ * if_insert 1-插入 0-删除
+ */
+app.post('/userinfo_update', (req, res) =>
+{
+    const user = req.body.user;
+    const user_id = req.body.user_id;
+    const code = req.body.code;
+    if (code == 100)
+    {
+        const bangumi_id = req.body.bangumi_id;
+        const if_insert = req.body.if_insert;
+        db.update_like(user, user_id, if_insert, bangumi_id)
+            .then(data =>
+            {
+                res.json(data);
+            })
+    }
 });
 
 app.get('/test', (req, res) =>

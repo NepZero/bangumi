@@ -159,7 +159,7 @@ async function fetchData()
     try
     {
         fetchA = fetch('/bangumiInfo', { method: 'POST', headers: { 'Content-Type': 'application/json', 'season': '2025.4' } }).then(response => response.json());
-        fetchB = fetch('/daily_recommend', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
+        fetchB = fetch('/userinfo_update', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ 'user': 'nepnep', 'user_id': 1, 'code': 100, 'if_insert': 0, 'bangumi_id': 5 }) }).then(response => response.json());
         fetchC = fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json', 'user': 'nepnep' } }).then(response => response.json());
         const responseA = await fetchA;
         const responseB = await fetchB;
