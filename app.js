@@ -17,7 +17,7 @@ app.use(session({
     store: sessionStore,
     cookie: {
         httpOnly: true, // 开启后前端无法通过 JS 操作
-        maxAge: 1000 * 60 * 3600 // 这一条 是控制 sessionID 的过期时间的！！！
+        maxAge: 1000 * 60 * 60 * 12 // 这一条 是控制浏览器 sessionID 的过期时间的！！！
     },
 }))
 
@@ -34,6 +34,7 @@ app.get('/index', (req, res) =>
 });
 app.get('/login', (req, res) =>
 {
+    //用户已登录 禁止重复进入
     if (req.session.userId && req.session.nickname)
     {
         res.redirect('/index');
@@ -45,10 +46,18 @@ app.get('/login', (req, res) =>
 });
 app.get('/favlist', (req, res) =>
 {
-    res.sendFile(__dirname + '/public/html/favlist.html')
+    //用户未登录 禁止查看收藏列表
+    if (req.session.userId && req.session.nickname)
+    {
+        res.sendFile(__dirname + '/public/html/favlist.html');
+    } else
+    {
+        res.redirect('/login');
+    }
 });
 app.get('/register', (req, res) =>
 {
+    //用户已登录 禁止重复进入
     if (req.session.userId && req.session.nickname)
     {
         res.redirect('/index');
@@ -122,6 +131,7 @@ app.post('/login', async (req, res) =>
     const user = req.body.user;
     const password = req.body.password;
     const searchType = req.body.searchType;
+    const isKeepLogin = req.body.checkbox==='on';
     try
     {
         const result = await db.getAll('login_info', searchType, user);
@@ -137,6 +147,11 @@ app.post('/login', async (req, res) =>
         }
         req.session['userId'] = data.id;
         req.session['nickname'] = data.nickname;
+        if (isKeepLogin) {
+            req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
+        } else {
+            req.session.cookie.maxAge = 1000 * 60 * 60 * 12;
+        }
         return res.status(200).json({ code: 200, message: '登录成功' });
     } catch (e)
     {

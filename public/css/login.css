@@ -221,6 +221,14 @@ nav ul li {
     box-sizing: border-box;
 }
 
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
 .login-button {
     background-color: #4baad3;
     color: white;
