@@ -254,6 +254,7 @@ app.post('/userinfo_update', (req, res) =>
     const user = req.body.user;
     const user_id = req.body.user_id;
     const code = req.body.code;
+    console.log(code);
     if (code == 100)
     {
         const bangumi_id = req.body.bangumi_id;
@@ -261,6 +262,7 @@ app.post('/userinfo_update', (req, res) =>
         db.update_like(user, user_id, if_insert, bangumi_id)
             .then(data =>
             {
+                console.log(data);
                 res.json(data);
             })
     }

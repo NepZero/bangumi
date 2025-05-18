@@ -52,13 +52,31 @@ function Init()
             {
                 this.style.backgroundImage = 'url(/img/unlike.png)';
                 likes[this.className] = 0;
-                saveListToCookie('likes', likes);
+                if (user['code'] == 401)
+                {
+                    saveListToCookie('likes', likes);
+                }
+                else
+                {
+                    fetchA = fetch('/userinfo_update', { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify({ 'user': user['nickname'], 'user_id': user['user_id'], 'code': 100, 'bangumi_id': this.className, 'if_insert': 0 }) }).then(response => console.log(response.json()));
+                }
+
             }
             else
             {
+
                 this.style.backgroundImage = 'url(/img/like.png)';
                 likes[this.className] = 1;
-                saveListToCookie('likes', likes);
+                if (user['code'] == 401)
+                {
+                    saveListToCookie('likes', likes);
+                }
+                else
+                {
+                    console.log(111);
+                    fetchA = fetch('/userinfo_update', { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify({ 'user': user['nickname'], 'user_id': user["user_id"], 'code': 100, 'bangumi_id': this.className, 'if_insert': 1 }) }).then(response => console.log(response.json()));
+                }
+
             }
         }
 
