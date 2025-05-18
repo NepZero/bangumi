@@ -2,7 +2,7 @@
 const express = require('express');
 const db = require('./lib/mysql.js');
 const session = require("express-session");
-const e = require('express');
+const sessionStore = require('./lib/mysql_session.js');
 
 //创建应用对象
 const app = express();
@@ -14,6 +14,7 @@ app.use(session({
     secret: 'nepnep', //参与加密的字符串（又称签名）
     saveUninitialized: false, //是否为每次请求都设置一个cookie用来存储session的id
     resave: true,  //是否在每次请求时重新保存session
+    store: sessionStore,
     cookie: {
         httpOnly: true, // 开启后前端无法通过 JS 操作
         maxAge: 1000 * 60 * 3600 // 这一条 是控制 sessionID 的过期时间的！！！
@@ -217,7 +218,16 @@ app.post('/week_table', (req, res) =>
             {
                 ans[day2number(data[i]['screening'])]['bangumi_list'].push(data[i]);
             }
-            res.json({ 'data': ans, 'today': date.getDay() });
+            if (date.getDay() == 0)
+            {
+                res.json({ 'data': ans, 'today': 7 });
+            }
+
+            else
+            {
+                res.json({ 'data': ans, 'today': date.getDay() });
+            }
+
         })
 });
 /**
@@ -254,7 +264,6 @@ app.post('/userinfo_update', (req, res) =>
     const user = req.body.user;
     const user_id = req.body.user_id;
     const code = req.body.code;
-    console.log(code);
     if (code == 100)
     {
         const bangumi_id = req.body.bangumi_id;
@@ -262,7 +271,6 @@ app.post('/userinfo_update', (req, res) =>
         db.update_like(user, user_id, if_insert, bangumi_id)
             .then(data =>
             {
-                console.log(data);
                 res.json(data);
             })
     }
