@@ -87,7 +87,9 @@ function Init()
         bangumicard_image.style.position = "absolute";
         bangumicard_image.style.backgroundColor = "white";
         bangumicard_image.style.borderRadius = "0.5vw";
-        bangumicard_image.style.backgroundImage = `url("/img/${bangumi_informations[i - 1]['season']}/${bangumi_informations[i - 1]['id']}.png")`;
+
+        // bangumicard_image.style.backgroundImage = `url("/img/${bangumi_informations[i - 1]['season']}/${bangumi_informations[i - 1]['id']}.png")`;
+        setimg(`/img/${bangumi_informations[i - 1]['season']}/${bangumi_informations[i - 1]['id']}.png`, bangumicard_image);
         bangumicard_image.style.backgroundRepeat = 'no - repeat';
         bangumicard_image.style.backgroundPosition = 'center';
         bangumicard_image.style.backgroundSize = 'cover';
@@ -303,6 +305,21 @@ function getListFromCookie(listName)
     }
     return null; // 如果没有找到则返回null
 }
+function setimg(imgurl, card)
+{
+    const tempImg = new Image();
+    tempImg.onload = () =>
+    {
+        // 图片存在，设置背景
+        card.style.backgroundImage = `url("${imgurl}")`;
+    };
+    tempImg.onerror = () =>
+    {
+        // 图片不存在，使用默认背景
+        card.style.backgroundImage = 'url("/img/0.png")';
+    };
+    tempImg.src = imgurl;
+}
 
 function main()
 {
@@ -310,7 +327,6 @@ function main()
 }
 
 main();
-
 
 
 
