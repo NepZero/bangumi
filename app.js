@@ -166,7 +166,7 @@ app.post('/is_login', (req, res) =>
 {
     if (req.session['userId'] && req.session['nickname'])
     {
-        return res.status(200).json({ code: 200, nickname: req.session.nickname, user_id: req.userId });
+        return res.status(200).json({ code: 200, nickname: req.session.nickname, user_id: req.session.userId });
     } else
     {
         return res.status(401).json({ code: 401, message: '未登录' });
@@ -251,6 +251,7 @@ app.post('/week_table', (req, res) =>
 app.post('/user_like', (req, res) =>
 {
     const user = req.headers['user'];
+    console.log(user);
     // user = req.query['user'];
     db.getuser_like(user)
         .then(data =>
