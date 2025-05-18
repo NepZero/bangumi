@@ -266,27 +266,6 @@ app.post('/userinfo_update', (req, res) =>
     }
 });
 
-app.get('/test', (req, res) =>
-{
-    req.session.username = 'nepnep';
-    res.send('登录成功');
-});
-app.get('/test2', (req, res) =>
-{
-    req.session.username = 'lisi';
-    res.send('登录成功');
-});
-app.get('/test1', (req, res) =>
-{
-    if (req.session.username)
-    {
-        res.send(`你好 ${req.session.username}`);
-    }
-    else
-    {
-        res.send(`请登录注册`);
-    }
-});
 
 
 

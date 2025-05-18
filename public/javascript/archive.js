@@ -5,12 +5,14 @@ var bangumi_informations = [
 var user = {};
 var bangumicards_box = document.getElementsByClassName("bangumicards-box")[0];
 var bangumicard = [];
-bangumicard_like = [];
+var likes = []
+var bangumicard_like = [];
 
 function Init()
 {
     for (var i = 1; i <= bangumi_informations.length; i++)
     {
+
         bangumicard[i] = document.createElement('div');
         bangumicard[i].style.width = "36%";
         bangumicard[i].style.height = "10vw";
@@ -26,7 +28,11 @@ function Init()
         bangumicard_like[i].style.width = '1.5vw';
         bangumicard_like[i].style.position = 'absolute';
         bangumicard_like[i].style.right = '1%';
-        bangumicard_like[i].style.backgroundImage = 'url(/img/like.png)'
+        bangumicard_like[i].className = i;
+        if (likes[i] == 1)
+            bangumicard_like[i].style.backgroundImage = 'url(/img/like.png)';
+        else
+            bangumicard_like[i].style.backgroundImage = 'url(/img/unlike.png)';
         bangumicard_like[i].style.backgroundRepeat = 'no-repeat';
         bangumicard_like[i].style.backgroundPosition = 'center';
         bangumicard_like[i].style.backgroundSize = 'cover';
@@ -34,7 +40,7 @@ function Init()
         bangumicard[i].appendChild(bangumicard_like[i]);
         bangumicard_like[i].onmouseover = function ()
         {
-            this.style.filter = 'brightness(1.5)';
+            this.style.filter = 'brightness(1.2)';
         }
         bangumicard_like[i].onmouseout = function ()
         {
@@ -42,11 +48,18 @@ function Init()
         }
         bangumicard_like[i].onclick = function ()
         {
-            if (user['code'] == 401)
+            if (likes[this.className] == 1)
             {
-                console.log(11);
+                this.style.backgroundImage = 'url(/img/unlike.png)';
+                likes[this.className] = 0;
+                saveListToCookie('likes', likes);
             }
-            
+            else
+            {
+                this.style.backgroundImage = 'url(/img/like.png)';
+                likes[this.className] = 1;
+                saveListToCookie('likes', likes);
+            }
         }
 
 
@@ -161,6 +174,7 @@ function Init()
 
 
     }
+    // console.log(likes);
 }
 
 // function main()
@@ -191,15 +205,40 @@ async function fetchData()
     {
         fetchA = fetch('/bangumiInfo', { method: 'POST', headers: { 'Content-Type': 'application/json', 'season': '2025.4' } }).then(response => response.json());
         fetchB = fetch('/is_login', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
-        fetchC = fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json', 'user': 'nepnep' } }).then(response => response.json());
+
         const responseA = await fetchA;
-        const responseB = await fetchB;
-        const responseC = await fetchC;
         bangumi_informations = responseA['data'];
-        console.log(bangumi_informations);
-        console.log(responseB);
+        const responseB = await fetchB;
         user = responseB;
-        console.log(responseC['bangumi_list']);
+
+        for (var i = 1; i <= responseA['data'].length; i++)
+        {
+            likes[i] = 0;
+        }
+        if (user['code'] == 401)
+        {
+            if (getListFromCookie('likes') != null)
+            {
+                likes = getListFromCookie('likes');
+            }
+        }
+        else
+        {
+            fetchC = fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json', 'user': user['nickname'] } }).then(response => response.json());
+            const responseC = await fetchC;
+            for (var i = 1; i <= responseC['bangumi_list'].length; i++)
+            {
+                likes[responseC['bangumi_list'][i - 1]['id']] = 1;
+            }
+        }
+
+
+
+
+        // console.log(bangumi_informations);
+        console.log(user);
+
+
         Init();
     }
     catch (error)
@@ -209,7 +248,50 @@ async function fetchData()
 
 }
 
-fetchData();
+// 保存列表到cookie
+function saveListToCookie(listName, listData, daysToExpire = 30)
+{
+    // 将列表数据转换为JSON字符串
+    const listString = JSON.stringify(listData);
+
+    // 设置过期时间
+    const date = new Date();
+    date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+
+    // 设置cookie
+    document.cookie = `${listName}=${encodeURIComponent(listString)};${expires};path=/`;
+}
+
+// 从cookie获取列表
+function getListFromCookie(listName)
+{
+    const name = listName + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split(';');
+
+    for (let i = 0; i < cookieArray.length; i++)
+    {
+        let cookie = cookieArray[i];
+        while (cookie.charAt(0) === ' ')
+        {
+            cookie = cookie.substring(1);
+        }
+        if (cookie.indexOf(name) === 0)
+        {
+            const listString = cookie.substring(name.length, cookie.length);
+            return JSON.parse(listString);
+        }
+    }
+    return null; // 如果没有找到则返回null
+}
+
+function main()
+{
+    fetchData();
+}
+
+main();
 
 
 
