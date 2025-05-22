@@ -1,10 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Bangumi Search</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/search.css">
 </head>
+
 <body>
-<script src="/javascript/search.js"></script>
+    <nav>
+        <ul>
+            <li style="color:palevioletred"><a href="/index" style="text-decoration: none;color: inherit">bangumi</a></li>
+            <li><a href="/favlist" style="text-decoration: none;color: inherit">收藏列表</a></li>
+            <li><a href="/search" style="text-decoration: none;color: inherit">番剧索引</a></li>
+            <li><a href="/archive" style="text-decoration: none;color: inherit">季度信息</a></li>
+        </ul>
+        <div class="button-group">
+            <button class="button-primary"><a href="/login" style="text-decoration: none;color: inherit">登录</a></button>
+            <button class="button-secondary"><a href="/register" style="text-decoration: none;color: inherit">注册</a>
+            </button>
+        </div>
+        <div id="welcomeArea" style="display: none;">
+            <span id="userNickname"></span>
+            <button id="logoutBtn" class="button-primary">登出</button>
+        </div>
+    </nav>
+
+    <div class="search-container">
+        <!-- 搜索框 -->
+        <div class="search-header">
+            <form id="textSearchForm">
+                <div class="search-box">
+                    <input type="text" name="text" placeholder="输入搜索关键词...">
+                    <button type="submit">搜索</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="searchResults" class="results-container"></div>
+    </div>
+
+    <script src="/javascript/search.js"></script>
+    <script src="/javascript/preload.js"></script>
 </body>
+
 </html>

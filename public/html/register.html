@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bangumi Register</title>
-    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/css/register.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
 <body>
-<!-- Header -->
-<!-- <nav class="header">
+    <!-- Header -->
+    <!-- <nav class="header">
     <div class="left-logo">
         <a href="#" class="logo">bangumi</a>
     </div>
@@ -36,116 +36,116 @@
     </div>
 
 </nav> -->
-<nav>
-    <ul>
-        <li style="color:palevioletred"><a href="/index">bangumi</a></li>
-        <!-- <li><a href="/index">首页</a></li> -->
-        <li><a href="/favlist">收藏列表</a></li>
-        <li><a href="">番剧索引</a></li>
-        <li><a href="/archive">季度信息</a></li>
-    </ul>
-    <div class="button-group">
-        <button class="button-primary"><a href="/login">登录</a></button>
-        <button class="button-secondary"><a href="/register">注册</a></button>
+    <nav>
+        <ul>
+            <li class="home"><a href="/index">bangumi</a></li>
+            <!-- <li><a href="/index">首页</a></li> -->
+            <li class="like"><a href="/favlist">收藏列表</a></li>
+            <li class="search"><a href="/search">番剧索引</a></li>
+            <li class="more"><a href="/archive">季度信息</a></li>
+        </ul>
+        <div class="button-group">
+            <button class="button-primary"><a href="/login">登录</a></button>
+            <button class="button-secondary"><a href="/register">注册</a></button>
+        </div>
+
+    </nav>
+
+    <!-- Main content -->
+    <div class="container">
+        <div class="register-container">
+            <div class="register-form">
+                <h2 class="section-title">注册成为 Bangumi会员</h2>
+                <form method="post" action="/register" id="registerForm">
+                    <div class="form-group">
+                        <label class="form-label">你的 Email 地址</label>
+                        <input type="email" class="form-input" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">设置密码</label>
+                        <input type="password" class="form-input" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">确认密码</label>
+                        <input type="password" class="form-input" name="confirmPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">设置昵称</label>
+                        <input type="text" class="form-input" name="nickname" required>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="remember" name="checkbox" required>
+                        <label for="remember">我已同意用户协议</label>
+                    </div>
+                    <button type="submit" class="register-button" id="registerBtn">注册会员</button>
+                </form>
+                <div id="msg" style="color:red; margin-top:15px;"></div>
+            </div>
+            <div class="login-section">
+                <label class="form-label">已经注册过 Bangumi 账户？</label>
+                <a class="login-button" href="/login">立即登录</a>
+                <label class="form-label">忘记密码？</label>
+                <a href="#" class="reset-password">重置密码</a>
+            </div>
+        </div>
+        <div class="footer-banner">
+            <span>提供: </span>
+            <span class="footer-logo">bangumi</span>
+            <span>中文全称: 番组计划</span>
+        </div>
     </div>
 
-</nav>
-
-<!-- Main content -->
-<div class="container">
-    <div class="register-container">
-        <div class="register-form">
-            <h2 class="section-title">注册成为 Bangumi会员</h2>
-            <form method="post" action="/register" id="registerForm">
-                <div class="form-group">
-                    <label class="form-label">你的 Email 地址</label>
-                    <input type="email" class="form-input" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">设置密码</label>
-                    <input type="password" class="form-input" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">确认密码</label>
-                    <input type="password" class="form-input" name="confirmPassword" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">设置昵称</label>
-                    <input type="text" class="form-input" name="nickname" required>
-                </div>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="remember" name="checkbox" required>
-                    <label for="remember">我已同意用户协议</label>
-                </div>
-                <button type="submit" class="register-button" id="registerBtn">注册会员</button>
-            </form>
-            <div id="msg" style="color:red; margin-top:15px;"></div>
+    <!-- Footer -->
+    <div class="site-footer">
+        <div class="footer-columns">
+            <div class="footer-column">
+                <div class="footer-heading">关于我们</div>
+                <ul class="footer-links">
+                    <li class="footer-link">关于我们</li>
+                    <li class="footer-link">社区指导原则</li>
+                    <li class="footer-link">版权声明</li>
+                    <li class="footer-link">隐私政策</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <div class="footer-heading">获取帮助</div>
+                <ul class="footer-links">
+                    <li class="footer-link">BBCode</li>
+                    <li class="footer-link">站点地图</li>
+                    <li class="footer-link">播放列表</li>
+                    <li class="footer-link">BUG反馈</li>
+                    <li class="footer-link">天窗站务</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <div class="footer-heading">特别推荐</div>
+                <ul class="footer-links">
+                    <li class="footer-link">年鉴 2024 | 23 | 22 | 21 | 20 | 19 | 18 | 17 | 16 | 15 | 14 | 13 | 12 | 11 |
+                        10
+                    </li>
+                    <li class="footer-link">番组开发计划</li>
+                    <li class="footer-link">CHiKi 客户端</li>
+                    <li class="footer-link">etokei 时钟计</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <div class="footer-heading">更多</div>
+                <ul class="footer-links">
+                    <li class="footer-link">开发者平台</li>
+                    <li class="footer-link">日志</li>
+                    <li class="footer-link">格莱美人</li>
+                    <li class="footer-link">MAD 竞赛</li>
+                    <li class="footer-link">周边</li>
+                    <li class="footer-link">Dollars</li>
+                </ul>
+            </div>
         </div>
-        <div class="login-section">
-            <label class="form-label">已经注册过 Bangumi 账户？</label>
-            <a class="login-button" href="/login">立即登录</a>
-            <label class="form-label">忘记密码？</label>
-            <a href="#" class="reset-password">重置密码</a>
-        </div>
-    </div>
-    <div class="footer-banner">
-        <span>提供: </span>
-        <span class="footer-logo">bangumi</span>
-        <span>中文全称: 番组计划</span>
-    </div>
-</div>
-
-<!-- Footer -->
-<div class="site-footer">
-    <div class="footer-columns">
-        <div class="footer-column">
-            <div class="footer-heading">关于我们</div>
-            <ul class="footer-links">
-                <li class="footer-link">关于我们</li>
-                <li class="footer-link">社区指导原则</li>
-                <li class="footer-link">版权声明</li>
-                <li class="footer-link">隐私政策</li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <div class="footer-heading">获取帮助</div>
-            <ul class="footer-links">
-                <li class="footer-link">BBCode</li>
-                <li class="footer-link">站点地图</li>
-                <li class="footer-link">播放列表</li>
-                <li class="footer-link">BUG反馈</li>
-                <li class="footer-link">天窗站务</li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <div class="footer-heading">特别推荐</div>
-            <ul class="footer-links">
-                <li class="footer-link">年鉴 2024 | 23 | 22 | 21 | 20 | 19 | 18 | 17 | 16 | 15 | 14 | 13 | 12 | 11 |
-                    10
-                </li>
-                <li class="footer-link">番组开发计划</li>
-                <li class="footer-link">CHiKi 客户端</li>
-                <li class="footer-link">etokei 时钟计</li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <div class="footer-heading">更多</div>
-            <ul class="footer-links">
-                <li class="footer-link">开发者平台</li>
-                <li class="footer-link">日志</li>
-                <li class="footer-link">格莱美人</li>
-                <li class="footer-link">MAD 竞赛</li>
-                <li class="footer-link">周边</li>
-                <li class="footer-link">Dollars</li>
-            </ul>
+        <div class="copyright">© 2008-2023 Bangumi (a.k.a Chobits), some rights reserved (阿饿)</div>
+        <div class="footer-buttons">
+            登录 | 注册 | 关于 | 回到顶部 ▲
         </div>
     </div>
-    <div class="copyright">© 2008-2023 Bangumi (a.k.a Chobits), some rights reserved (阿饿)</div>
-    <div class="footer-buttons">
-        登录 | 注册 | 关于 | 回到顶部 ▲
-    </div>
-</div>
-<script src="/javascript/register.js"></script>
+    <script src="/javascript/register.js"></script>
 </body>
 
 </html>

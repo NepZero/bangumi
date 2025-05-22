@@ -1,0 +1,60 @@
+.search-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* 搜索框样式 */
+.search-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.search-box {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #eee;
+    border-right: none;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-box button {
+    padding: 12px 30px;
+    background: palevioletred;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-box button:hover {
+    opacity: 0.9;
+}
+
+/* 搜索结果区域 */
+.results-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+/* 加载和错误状态 */
+.loading, .error, .no-results {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    grid-column: 1 / -1;
+}
+
+.error {
+    color: #ff4757;
+}
