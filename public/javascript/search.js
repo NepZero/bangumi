@@ -1,19 +1,51 @@
 document.addEventListener('DOMContentLoaded', function() {
     const textSearchForm = document.getElementById('textSearchForm');
     const tagSearchForm = document.getElementById('tagSearchForm');
+    const tagOptions = document.getElementById('tagOptions');
     const searchResults = document.getElementById('searchResults');
+
+    // 加载标签选项
+    async function loadTags() {
+        try {
+            const response = await fetch('/tags');
+            const tags = await response.json();
+            
+            const tagsHTML = tags.map(tag => `
+                <label>
+                    <input type="checkbox" name="tags" value="${tag}"> ${tag}
+                </label>
+            `).join('');
+            
+            tagOptions.innerHTML += tagsHTML;
+        } catch (error) {
+            console.error('加载标签失败:', error);
+        }
+    }
+
+    // 处理全选标签
+    tagOptions.addEventListener('change', function(e) {
+        if (e.target.value === 'all') {
+            const isChecked = e.target.checked;
+            tagOptions.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                if (checkbox.value !== 'all') {
+                    checkbox.checked = isChecked;
+                    checkbox.disabled = isChecked;
+                }
+            });
+        }
+    });
 
     // 文本搜索处理
     textSearchForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        const text = this.querySelector('input[name="text"]').value;
+        const text = this.querySelector('input[name="text"]').value.trim();
+        
+        if (!text) return;
         
         try {
             const response = await fetch('/searchbytext', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text })
             });
             
@@ -27,18 +59,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // 标签搜索处理
     tagSearchForm.addEventListener('submit', async function(e) {
         e.preventDefault();
+        
         const formData = {
-            season: this.querySelector('#seasonSelect').value || 'all',
-            tag: this.querySelector('#tagSelect').value || 'all',
-            isfinish: this.querySelector('#statusSelect').value || 'all'
+            season: document.querySelector('input[name="season"]:checked').value,
+            tags: Array.from(document.querySelectorAll('input[name="tags"]:checked'))
+                      .map(input => input.value)
+                      .filter(value => value !== 'all'),
+            isfinish: document.querySelector('input[name="status"]:checked').value
         };
         
         try {
             const response = await fetch('/searchbytag', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
             
@@ -67,4 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         searchResults.innerHTML = resultsHTML;
     }
+
+    // 初始化
+    loadTags();
 });

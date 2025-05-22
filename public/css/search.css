@@ -4,80 +4,92 @@
     padding: 0 20px;
 }
 
-/* 搜索区块通用样式 */
-.text-search,
-.tag-search {
-    background: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-h2 {
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-}
-
 /* 文本搜索样式 */
+.text-search {
+    margin-bottom: 30px;
+}
+
 .search-box {
     display: flex;
     gap: 10px;
+    max-width: 600px;
 }
 
 .search-box input {
     flex: 1;
-    padding: 10px 15px;
+    padding: 12px 15px;
     border: 2px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
-    transition: border-color 0.3s;
-}
-
-.search-box input:focus {
-    border-color: palevioletred;
-    outline: none;
 }
 
 /* 标签搜索样式 */
-.select-group {
+.filter-row {
     display: flex;
-    gap: 15px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.filter-label {
+    flex: 0 0 80px;
+    font-weight: bold;
+    color: #333;
+    padding: 8px 0;
+}
+
+.filter-options {
+    flex: 1;
+    display: flex;
     flex-wrap: wrap;
+    gap: 15px;
 }
 
-select {
-    padding: 8px 12px;
-    border: 2px solid #ddd;
+.filter-options label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
     border-radius: 4px;
-    background-color: white;
-    min-width: 150px;
     cursor: pointer;
-    transition: border-color 0.3s;
+    transition: background-color 0.2s;
 }
 
-select:focus {
-    border-color: palevioletred;
-    outline: none;
+.filter-options label:hover {
+    background-color: #f0f0f0;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 10px;
+    padding: 20px 0;
+    margin-left: 80px;
 }
 
 /* 按钮样式 */
 button {
     padding: 8px 20px;
-    background-color: palevioletred;
-    color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
+}
+
+button[type="submit"] {
+    background-color: palevioletred;
+    color: white;
+}
+
+button[type="reset"] {
+    background-color: #f0f0f0;
+    color: #666;
 }
 
 button:hover {
-    background-color: #db5b7d;
+    opacity: 0.9;
 }
 
-/* 搜索结果区域 */
+/* 搜索结果样式 */
 .results-container {
     margin-top: 30px;
     display: grid;

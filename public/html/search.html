@@ -43,34 +43,43 @@
         <div class="tag-search">
             <h2>标签搜索</h2>
             <form id="tagSearchForm">
-                <div class="select-group">
-                    <select name="season" id="seasonSelect">
-                        <option value="">所有季度</option>
-                        <option value="all">所有</option>
-                        <option value="2025.1">2025年1月</option>
-                        <option value="2025.4">2025年4月</option>
-                        <option value="2025.7">2025年7月</option>
-                        <option value="2025.10">2025年10月</option>
-                    </select>
-                    <select name="tag" id="tagSelect">
-                        <option value="">选择标签</option>
-                        <option value="all">所有</option>
-                    </select>
-                    <select name="isfinish" id="statusSelect">
-                        <option value="">播放状态</option>
-                        <option value="all">所有</option>
-                        <option value="1">已完结</option>
-                        <option value="0">连载中</option>
-                    </select>
+                <div class="filter-row">
+                    <label class="filter-label">季度</label>
+                    <div class="filter-options">
+                        <label><input type="radio" name="season" value="all" checked> 全部</label>
+                        <label><input type="radio" name="season" value="2025.1"> 2025年1月</label>
+                        <label><input type="radio" name="season" value="2025.4"> 2025年4月</label>
+                        <label><input type="radio" name="season" value="2025.7"> 2025年7月</label>
+                        <label><input type="radio" name="season" value="2025.10"> 2025年10月</label>
+                    </div>
+                </div>
+                
+                <div class="filter-row">
+                    <label class="filter-label">标签</label>
+                    <div class="filter-options" id="tagOptions">
+                        <label><input type="checkbox" name="tags" value="all"> 全部</label>
+                        <!-- 标签选项将由 JavaScript 动态填充 -->
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <label class="filter-label">播放状态</label>
+                    <div class="filter-options">
+                        <label><input type="radio" name="status" value="all" checked> 全部</label>
+                        <label><input type="radio" name="status" value="1"> 已完结</label>
+                        <label><input type="radio" name="status" value="0"> 连载中</label>
+                    </div>
+                </div>
+
+                <div class="filter-actions">
                     <button type="submit">搜索</button>
+                    <button type="reset">重置</button>
                 </div>
             </form>
         </div>
 
         <!-- 搜索结果展示区 -->
-        <div id="searchResults" class="results-container">
-            <!-- 结果将由 JavaScript 动态填充 -->
-        </div>
+        <div id="searchResults" class="results-container"></div>
     </div>
 
     <script src="/javascript/search.js"></script>
