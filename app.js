@@ -32,6 +32,10 @@ app.get('/index', (req, res) =>
 {
     res.sendFile(__dirname + '/public/html/index.html')
 });
+app.get('/search', (req, res) =>
+    {
+        res.sendFile(__dirname + '/public/html/search.html');
+    });
 app.get('/login', (req, res) =>
 {
     //用户已登录 禁止重复进入
@@ -291,7 +295,15 @@ app.post('/userinfo_update', (req, res) =>
             })
     }
 });
-
+app.post('/search',(req,res) =>{
+    const season = req.body.season;
+    const tag = req.body.tag;
+    const isfinish = req.body.isfinish;
+    console.log(season1,tag1,isfinish1);
+    db.get_id_according_tag(season,tag,isfinish).then(data =>{
+        res.json(data);
+    })
+})
 
 
 
