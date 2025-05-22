@@ -22,7 +22,6 @@ app.use(session({
 }))
 
 
-
 //创建路由规则
 app.get('/archive', (req, res) =>
 {
@@ -255,8 +254,6 @@ app.post('/week_table', (req, res) =>
 app.post('/user_like', (req, res) =>
 {
     const user = req.headers['user'];
-    console.log(user);
-    // user = req.query['user'];
     db.getuser_like(user)
         .then(data =>
         {
