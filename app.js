@@ -305,7 +305,7 @@ app.post('/searchbytag',(req,res) =>{
 })
 app.post('/searchbytext',(req,res) =>{
     const text = req.body.text;
-    db.get_id_according_tag(text).then(data =>{
+    db.get_id_according_text(text).then(data =>{
         res.json(data);
     })
 })
