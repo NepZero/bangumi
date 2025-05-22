@@ -28,9 +28,8 @@
     </nav>
 
     <div class="search-container">
-        <!-- 文本搜索 -->
-        <div class="text-search">
-            <h2>文本搜索</h2>
+        <!-- 搜索框 -->
+        <div class="search-header">
             <form id="textSearchForm">
                 <div class="search-box">
                     <input type="text" name="text" placeholder="输入搜索关键词...">
@@ -39,46 +38,6 @@
             </form>
         </div>
 
-        <!-- 标签搜索 -->
-        <div class="tag-search">
-            <h2>标签搜索</h2>
-            <form id="tagSearchForm">
-                <div class="filter-row">
-                    <label class="filter-label">季度</label>
-                    <div class="filter-options">
-                        <label><input type="radio" name="season" value="all" checked> 全部</label>
-                        <label><input type="radio" name="season" value="2025.1"> 2025年1月</label>
-                        <label><input type="radio" name="season" value="2025.4"> 2025年4月</label>
-                        <label><input type="radio" name="season" value="2025.7"> 2025年7月</label>
-                        <label><input type="radio" name="season" value="2025.10"> 2025年10月</label>
-                    </div>
-                </div>
-                
-                <div class="filter-row">
-                    <label class="filter-label">标签</label>
-                    <div class="filter-options" id="tagOptions">
-                        <label><input type="checkbox" name="tags" value="all"> 全部</label>
-                        <!-- 标签选项将由 JavaScript 动态填充 -->
-                    </div>
-                </div>
-
-                <div class="filter-row">
-                    <label class="filter-label">播放状态</label>
-                    <div class="filter-options">
-                        <label><input type="radio" name="status" value="all" checked> 全部</label>
-                        <label><input type="radio" name="status" value="1"> 已完结</label>
-                        <label><input type="radio" name="status" value="0"> 连载中</label>
-                    </div>
-                </div>
-
-                <div class="filter-actions">
-                    <button type="submit">搜索</button>
-                    <button type="reset">重置</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- 搜索结果展示区 -->
         <div id="searchResults" class="results-container"></div>
     </div>
 
