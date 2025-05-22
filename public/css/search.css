@@ -1,0 +1,86 @@
+.search-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* 搜索区块通用样式 */
+.text-search,
+.tag-search {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+/* 文本搜索样式 */
+.search-box {
+    display: flex;
+    gap: 10px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.search-box input:focus {
+    border-color: palevioletred;
+    outline: none;
+}
+
+/* 标签搜索样式 */
+.select-group {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+select {
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    min-width: 150px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+select:focus {
+    border-color: palevioletred;
+    outline: none;
+}
+
+/* 按钮样式 */
+button {
+    padding: 8px 20px;
+    background-color: palevioletred;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #db5b7d;
+}
+
+/* 搜索结果区域 */
+.results-container {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}

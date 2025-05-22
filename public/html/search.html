@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Bangumi Search</title>
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/search.css">
 </head>
 
 <body>
@@ -25,6 +26,52 @@
             <button id="logoutBtn" class="button-primary">登出</button>
         </div>
     </nav>
+
+    <div class="search-container">
+        <!-- 文本搜索 -->
+        <div class="text-search">
+            <h2>文本搜索</h2>
+            <form id="textSearchForm">
+                <div class="search-box">
+                    <input type="text" name="text" placeholder="输入搜索关键词...">
+                    <button type="submit">搜索</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 标签搜索 -->
+        <div class="tag-search">
+            <h2>标签搜索</h2>
+            <form id="tagSearchForm">
+                <div class="select-group">
+                    <select name="season" id="seasonSelect">
+                        <option value="">所有季度</option>
+                        <option value="all">所有</option>
+                        <option value="2025.1">2025年1月</option>
+                        <option value="2025.4">2025年4月</option>
+                        <option value="2025.7">2025年7月</option>
+                        <option value="2025.10">2025年10月</option>
+                    </select>
+                    <select name="tag" id="tagSelect">
+                        <option value="">选择标签</option>
+                        <option value="all">所有</option>
+                    </select>
+                    <select name="isfinish" id="statusSelect">
+                        <option value="">播放状态</option>
+                        <option value="all">所有</option>
+                        <option value="1">已完结</option>
+                        <option value="0">连载中</option>
+                    </select>
+                    <button type="submit">搜索</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 搜索结果展示区 -->
+        <div id="searchResults" class="results-container">
+            <!-- 结果将由 JavaScript 动态填充 -->
+        </div>
+    </div>
 
     <script src="/javascript/search.js"></script>
     <script src="/javascript/preload.js"></script>
