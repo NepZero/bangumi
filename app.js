@@ -295,16 +295,20 @@ app.post('/userinfo_update', (req, res) =>
             })
     }
 });
-app.post('/search',(req,res) =>{
+app.post('/searchbytag',(req,res) =>{
     const season = req.body.season;
     const tag = req.body.tag;
     const isfinish = req.body.isfinish;
-    console.log(season1,tag1,isfinish1);
     db.get_id_according_tag(season,tag,isfinish).then(data =>{
         res.json(data);
     })
 })
-
+app.post('/searchbytext',(req,res) =>{
+    const text = req.body.text;
+    db.get_id_according_tag(text).then(data =>{
+        res.json(data);
+    })
+})
 
 
 //监听端口 启动服务
