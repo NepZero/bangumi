@@ -32,9 +32,9 @@ app.get('/index', (req, res) =>
     res.sendFile(__dirname + '/public/html/index.html')
 });
 app.get('/search', (req, res) =>
-    {
-        res.sendFile(__dirname + '/public/html/search.html');
-    });
+{
+    res.sendFile(__dirname + '/public/html/search.html');
+});
 app.get('/login', (req, res) =>
 {
     //用户已登录 禁止重复进入
@@ -134,7 +134,7 @@ app.post('/login', async (req, res) =>
     const user = req.body.user;
     const password = req.body.password;
     const searchType = req.body.searchType;
-    const isKeepLogin = req.body.checkbox==='on';
+    const isKeepLogin = req.body.checkbox === 'on';
     try
     {
         const result = await db.getAll('login_info', searchType, user);
@@ -150,9 +150,11 @@ app.post('/login', async (req, res) =>
         }
         req.session['userId'] = data.id;
         req.session['nickname'] = data.nickname;
-        if (isKeepLogin) {
+        if (isKeepLogin)
+        {
             req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
-        } else {
+        } else
+        {
             req.session.cookie.maxAge = 1000 * 60 * 60 * 12;
         }
         return res.status(200).json({ code: 200, message: '登录成功' });
@@ -292,17 +294,21 @@ app.post('/userinfo_update', (req, res) =>
             })
     }
 });
-app.post('/searchbytag',(req,res) =>{
+app.post('/searchbytag', (req, res) =>
+{
     const season = req.body.season;
     const tag = req.body.tag;
     const isfinish = req.body.isfinish;
-    db.get_id_according_tag(season,tag,isfinish).then(data =>{
+    db.get_id_according_tag(season, tag, isfinish).then(data =>
+    {
         res.json(data);
     })
 })
-app.post('/searchbytext',(req,res) =>{
+app.post('/searchbytext', (req, res) =>
+{
     const text = req.body.text;
-    db.get_id_according_text(text).then(data =>{
+    db.get_id_according_text(text).then(data =>
+    {
         res.json(data);
     })
 })

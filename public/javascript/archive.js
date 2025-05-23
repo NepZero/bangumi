@@ -5,8 +5,75 @@ var bangumi_informations = [
 var user = {};
 var bangumicards_box = document.getElementsByClassName("bangumicards-box")[0];
 var bangumicard = [];
-var likes = []
+var likes = [];
 var bangumicard_like = [];
+var season;
+function more_season()
+{
+    var body = document.body;
+    var more = document.getElementsByClassName("more")[0];
+    var more_div = document.createElement('div');
+    var more_flag = 0;
+    var season_div = ['2025.4', '2025.1', '2024.10', '2024.7', '2024.4', '2024.1', '2023.10', '2023.7', '2023.4', '2023.1'];
+    var season_cards = [];
+
+    more.onclick = function ()
+    {
+        if (more_flag == 0)
+        {
+            more_flag = 1;
+            more_div.style.height = '10vw';
+            more_div.style.width = '7vw';
+            // more_div.style.backgroundColor = 'blue';
+            more_div.style.position = 'fixed';
+            more_div.style.top = '3vw';
+            more_div.style.left = '27%';
+            more_div.style.zIndex = '500';
+            more_div.style.overflowY = 'auto';
+            more_div.style.borderRadius = "0.5vw";
+            more_div.style.display = 'flex';
+            more_div.style.flexDirection = 'column';
+            more_div.style.gap = '2px';
+            more_div.style.backdropFilter = 'blur(10px)';
+            more_div.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
+            body.appendChild(more_div);
+
+            for (var i = 0; i < season_div.length; i++)
+            {
+                season_cards[i] = document.createElement('div');
+                season_cards[i].style.height = '1vw';
+                season_cards[i].style.width = '100%';
+                season_cards[i].innerHTML = season_div[i].slice(0, 4) + '年' + season_div[i].slice(5) + '月';
+                season_cards[i].className = season_div[i];
+                season_cards[i].style.fontSize = '0.8vw';
+                more_div.appendChild(season_cards[i]);
+                more_div.style.textAlign = "center";
+                more_div.style.cursor = 'pointer';
+
+                season_cards[i].onmouseover = function ()
+                {
+                    this.style.backgroundColor = 'rgb(139,139,139)';
+                }
+                season_cards[i].onmouseout = function ()
+                {
+                    this.style.backgroundColor = '';
+                }
+                season_cards[i].onclick = function ()
+                {
+                    // 创建并提交表单
+                    const season = encodeURIComponent(this.className);
+                    window.location.href = `/archive?season=${season}`;
+                }
+            }
+        }
+        else
+        {
+            more_flag = 0;
+            body.removeChild(more_div);
+
+        }
+    }
+}
 
 function Init()
 {
@@ -197,33 +264,12 @@ function Init()
     // console.log(likes);
 }
 
-// function main()
-// {
-//     let xhr = new XMLHttpRequest();
-//     xhr.open("post", "/bangumiInfo", true);
-//     xhr.setRequestHeader('Content-Type', 'application/json');
-//     // xhr.setRequestHeader('index', 'season');
-//     xhr.setRequestHeader('season', '2025.4');
-//     xhr.send();
-//     xhr.onreadystatechange = function ()
-//     {
-//         if (xhr.readyState == 4 && xhr.status == 200)
-//         {
-//             bangumi_informations = JSON.parse(xhr.response)["data"];
-//             console.log(JSON.parse(xhr.response));
-//             Init();
-//         }
-//         else if (xhr.status == 404)
-//         {
-//             console.log("接受信息失败");
-//         }
-//     }
-// }
+
 async function fetchData()
 {
     try
     {
-        fetchA = fetch('/bangumiInfo', { method: 'POST', headers: { 'Content-Type': 'application/json', 'season': '2025.4' } }).then(response => response.json());
+        fetchA = fetch('/bangumiInfo', { method: 'POST', headers: { 'Content-Type': 'application/json', 'season': season } }).then(response => response.json());
         fetchB = fetch('/is_login', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
 
         const responseA = await fetchA;
@@ -323,7 +369,13 @@ function setimg(imgurl, card)
 
 function main()
 {
+    const urlParams = new URLSearchParams(window.location.search);
+    season = urlParams.get('season');
+    if (season == null)
+        season = '2025.4';
+    console.log(season);
     fetchData();
+    more_season();
 }
 
 main();
