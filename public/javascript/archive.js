@@ -5,9 +5,11 @@ var bangumi_informations = [
 var user = {};
 var bangumicards_box = document.getElementsByClassName("bangumicards-box")[0];
 var bangumicard = [];
+var season_likes = {}
 var likes = [];
 var bangumicard_like = [];
 var season;
+var title = document.getElementsByClassName("top-time-box")[0];
 function more_season()
 {
     var body = document.body;
@@ -121,7 +123,8 @@ function Init()
                 likes[this.className] = 0;
                 if (user['code'] == 401)
                 {
-                    saveListToCookie('likes', likes);
+                    season_likes[season] = likes;
+                    saveListToCookie('likes', season_likes);
                 }
                 else
                 {
@@ -136,7 +139,8 @@ function Init()
                 likes[this.className] = 1;
                 if (user['code'] == 401)
                 {
-                    saveListToCookie('likes', likes);
+                    season_likes[season] = likes;
+                    saveListToCookie('likes', season_likes);
                 }
                 else
                 {
@@ -285,7 +289,12 @@ async function fetchData()
         {
             if (getListFromCookie('likes') != null)
             {
-                likes = getListFromCookie('likes');
+                console.log(season_likes)
+                season_likes = getListFromCookie('likes');
+                if (season_likes[season] != null)
+                {
+                    likes = season_likes[season]
+                }
             }
         }
         else
@@ -373,7 +382,7 @@ function main()
     season = urlParams.get('season');
     if (season == null)
         season = '2025.4';
-    console.log(season);
+    title.innerHTML = season.slice(0, 4) + '年' + season.slice(5) + '月新番'
     fetchData();
     more_season();
 }

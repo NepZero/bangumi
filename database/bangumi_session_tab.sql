@@ -16,28 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `userlike_info`
+-- Table structure for table `session_tab`
 --
 
-DROP TABLE IF EXISTS `userlike_info`;
+DROP TABLE IF EXISTS `session_tab`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `userlike_info` (
-  `user_id` int DEFAULT NULL,
-  `user` varchar(15) DEFAULT NULL,
-  `likes` int DEFAULT NULL,
-  UNIQUE KEY `userid_like` (`user_id`,`likes`)
+CREATE TABLE `session_tab` (
+  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `expires` int unsigned NOT NULL,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  PRIMARY KEY (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `userlike_info`
+-- Dumping data for table `session_tab`
 --
 
-LOCK TABLES `userlike_info` WRITE;
-/*!40000 ALTER TABLE `userlike_info` DISABLE KEYS */;
-INSERT INTO `userlike_info` VALUES (1,'nepnep',14),(1,'nepnep',15),(1,'nepnep',16),(1,'nepnep',20),(1,'nepnep',25),(1,'nepnep',28),(1,'nepnep',30),(1,'nepnep',7),(1,'nepnep',4),(1,'nepnep',2);
-/*!40000 ALTER TABLE `userlike_info` ENABLE KEYS */;
+LOCK TABLES `session_tab` WRITE;
+/*!40000 ALTER TABLE `session_tab` DISABLE KEYS */;
+INSERT INTO `session_tab` VALUES ('oSZDVD3_J6jt5LjGMQqil0tW87E0tqbE',1748053558,'{\"cookie\":{\"originalMaxAge\":43199998,\"expires\":\"2025-05-24T02:25:58.368Z\",\"httpOnly\":true,\"path\":\"/\"},\"userId\":1,\"nickname\":\"nepnep\"}');
+/*!40000 ALTER TABLE `session_tab` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
