@@ -201,7 +201,7 @@ function Init()
         bangumicard_platform.style.width = "20%";
         bangumicard_platform.style.position = "absolute";
         // bangumicard_platform.style.backgroundColor = "yellow";
-        bangumicard_platform.style.left = "45%";
+        bangumicard_platform.style.left = "48%";
         bangumicard_platform.style.top = "50%";
         bangumicard_platform.style.textAlign = "center";
         if (bangumi_informations[i - 1]["platform"])
@@ -216,7 +216,7 @@ function Init()
         bangumicard_episodes.style.width = "20%";
         bangumicard_episodes.style.position = "absolute";
         // bangumicard_episodes.style.backgroundColor = "yellow";
-        bangumicard_episodes.style.left = "45%";
+        bangumicard_episodes.style.left = "48%";
         bangumicard_episodes.style.top = "75%";
         bangumicard_episodes.style.textAlign = "center";
         bangumicard_episodes.innerHTML = "集数: " + bangumi_informations[i - 1]["episodes"];
@@ -228,7 +228,7 @@ function Init()
         bangumicard_isfinish.style.width = "25%";
         bangumicard_isfinish.style.position = "absolute";
         // bangumicard_isfinish.style.backgroundColor = "yellow";
-        bangumicard_isfinish.style.left = "70%";
+        bangumicard_isfinish.style.left = "72%";
         bangumicard_isfinish.style.top = "50%";
         bangumicard_isfinish.style.textAlign = "center";
         if (bangumi_informations[i - 1]["isfinish"] == 1)
@@ -243,7 +243,7 @@ function Init()
         bangumicard_tags.style.width = "25%";
         bangumicard_tags.style.position = "absolute";
         // bangumicard_tags.style.backgroundColor = "yellow";
-        bangumicard_tags.style.left = "70%";
+        bangumicard_tags.style.left = "72%";
         bangumicard_tags.style.top = "75%";
         bangumicard_tags.style.textAlign = "center";
         bangumicard_tags.innerHTML = "标签";
