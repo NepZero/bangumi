@@ -1,64 +1,87 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const textSearchForm = document.getElementById('textSearchForm');
-    const tagSearchForm = document.getElementById('tagSearchForm');
-    const searchResults = document.getElementById('searchResults');
+/**
+ * 番剧搜索类 - 处理文本搜索和标签搜索功能
+ */
+class BangumiSearch {
+    /**
+     * 初始化搜索功能
+     * 获取必要的DOM元素并设置事件监听
+     */
+    constructor() {
+        // 获取DOM元素
+        this.textSearchForm = document.getElementById('textSearchForm');
+        this.tagSearchForm = document.getElementById('tagSearchForm');
+        this.searchResults = document.getElementById('searchResults');
+        
+        // 初始化事件监听器
+        this.initEventListeners();
+    }
 
-    // 文本搜索处理
-    textSearchForm.addEventListener('submit', async function(e) {
+    /**
+     * 初始化事件监听器
+     * 为搜索表单添加提交事件处理
+     */
+    initEventListeners() {
+        this.textSearchForm.addEventListener('submit', this.handleTextSearch.bind(this));
+        this.tagSearchForm.addEventListener('submit', this.handleTagSearch.bind(this));
+    }
+
+    /**
+     * 处理文本搜索
+     * @param {Event} e - 提交事件对象
+     */
+    async handleTextSearch(e) {
         e.preventDefault();
-        const text = this.querySelector('input[name="text"]').value.trim();
+        const text = this.textSearchForm.querySelector('input[name="text"]').value.trim();
         
         if (!text) return;
 
         try {
             // 重置标签搜索表单
-            tagSearchForm.reset();
+            this.tagSearchForm.reset();
+            this.showLoading();
             
-            searchResults.innerHTML = '<div class="loading">搜索中...</div>';
-            
+            // 发送搜索请求
             const response = await fetch('/searchbytext', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text })
             });
             
             const result = await response.json();
-            displayResults(result);
+            this.displayResults(result);
         } catch (error) {
-            console.error('文本搜索失败:', error);
-            searchResults.innerHTML = '<div class="error">搜索失败，请稍后重试</div>';
+            this.showError('搜索失败，请稍后重试');
         }
-    });
+    }
 
-    // 标签搜索处理
-    tagSearchForm.addEventListener('submit', async function(e) {
+    /**
+     * 处理标签搜索
+     * @param {Event} e - 提交事件对象
+     */
+    async handleTagSearch(e) {
         e.preventDefault();
         
-        // 获取表单数据
-        const season = this.querySelector('#seasonSelect').value;
-        const tag = this.querySelector('#tagSelect').value;
-        const isfinish = this.querySelector('#statusSelect').value;
+        // 获取搜索条件
+        const season = this.tagSearchForm.querySelector('#seasonSelect').value;
+        const tag = this.tagSearchForm.querySelector('#tagSelect').value;
+        const isfinish = this.tagSearchForm.querySelector('#statusSelect').value;
         
         try {
             // 重置文本搜索表单
-            textSearchForm.reset();
+            this.textSearchForm.reset();
+            this.showLoading();
             
-            searchResults.innerHTML = '<div class="loading">搜索中...</div>';
-            
-            // 修改数据处理逻辑 - 按照 API 文档格式
+            // 处理搜索参数
             const formData = {
                 season: season === 'all' ? '' : season,
                 tag: tag === 'all' ? '' : tag,
                 isfinish: isfinish === 'all' ? '' : (isfinish ? Number(isfinish) : '')
             };
             
+            // 发送搜索请求
             const response = await fetch('/searchbytag', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
             
@@ -68,59 +91,78 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const result = await response.json();
 
-            // 改进响应数据处理逻辑
+            // 处理返回的数据
             if (Array.isArray(result)) {
-                // 直接返回数组的情况
-                displayResults(result);
+                this.displayResults(result);
             } else if (result && result.data) {
-                // 包含 data 字段的情况
-                displayResults(result.data);
+                this.displayResults(result.data);
             } else {
-                // 处理空结果的情况
-                displayResults([]);
+                this.displayResults([]);
             }
         } catch (error) {
-            console.error('标签搜索失败:', error);
-            searchResults.innerHTML = '<div class="error">搜索失败，请稍后重试</div>';
+            this.showError('搜索失败，请稍后重试');
         }
-    });
+    }
 
-    // 改进展示搜索结果函数
-    function displayResults(data) {
-        
+    /**
+     * 显示加载状态
+     */
+    showLoading() {
+        this.searchResults.innerHTML = '<div class="loading">搜索中...</div>';
+    }
+
+    /**
+     * 显示错误信息
+     * @param {string} message - 错误信息
+     */
+    showError(message) {
+        this.searchResults.innerHTML = `<div class="error">${message}</div>`;
+    }
+
+    /**
+     * 展示搜索结果
+     * @param {Array} data - 搜索结果数据数组
+     */
+    displayResults(data) {
+        // 验证数据格式
         if (!Array.isArray(data)) {
-            console.error('非数组数据:', data);
-            searchResults.innerHTML = '<div class="error">数据格式错误</div>';
+            this.showError('数据格式错误');
             return;
         }
 
+        // 处理空结果
         if (data.length === 0) {
-            searchResults.innerHTML = '<div class="no-results">未找到相关番剧</div>';
+            this.searchResults.innerHTML = '<div class="no-results">未找到相关番剧</div>';
             return;
         }
 
+        // 生成结果HTML
         const resultsHTML = data.map(anime => {
-            // 添加数据验证
             if (!anime || typeof anime !== 'object') {
-                console.error('无效的番剧数据:', anime);
                 return '';
             }
 
             return `
-    <div class="bangumicard">
-        <div class="card-cover">
-            <img src="/img/${anime.season || ''}/${anime.id || ''}.png" 
-                 alt="${anime.banguminame || '未知番剧'}"
-                 onerror="this.src='/img/0.jpg'">
-        </div>
-        <div class="card-content">
-            <h3 class="anime-title">${anime.banguminame || '未知番剧'}</h3>
-            <p class="update-time">${anime.screening || '更新时间未知'}</p>
-        </div>
-    </div>
+                <div class="bangumicard">
+                    <div class="card-cover">
+                        <img src="/img/${anime.season || ''}/${anime.id || ''}.png" 
+                             alt="${anime.banguminame || '未知番剧'}"
+                             onerror="this.src='/img/0.jpg'">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="anime-title">${anime.banguminame || '未知番剧'}</h3>
+                        <p class="update-time">${anime.screening || '更新时间未知'}</p>
+                    </div>
+                </div>
             `;
         }).filter(html => html !== '').join('');
 
-        searchResults.innerHTML = resultsHTML || '<div class="no-results">未找到相关番剧</div>';
+        // 更新DOM
+        this.searchResults.innerHTML = resultsHTML || '<div class="no-results">未找到相关番剧</div>';
     }
+}
+
+// 当DOM加载完成后初始化搜索功能
+document.addEventListener('DOMContentLoaded', () => {
+    new BangumiSearch();
 });
