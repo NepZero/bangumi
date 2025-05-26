@@ -104,6 +104,7 @@ button:hover {
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
+    position: relative;  /* 确保子元素可以相对它定位 */
 }
 
 .bangumicard:hover {
@@ -111,10 +112,33 @@ button:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* 收藏按钮样式 */
+.like-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;  /* 确保按钮在最上层 */
+    opacity: 0.8;  /* 默认半透明 */
+}
+
+.like-button:hover {
+    opacity: 1;  /* 悬停时完全不透明 */
+    transform: scale(1.1);  /* 悬停时略微放大 */
+}
+
 /* 卡片封面区域 */
 .card-cover {
     position: relative;
     padding-top: 130%; /* 调整图片比例 */
+    width: 100%;
+    overflow: hidden;
 }
 
 .card-cover img {

@@ -120,6 +120,57 @@ class BangumiSearch {
     }
 
     /**
+     * 初始化收藏功能
+     * @param {HTMLElement} card - 番剧卡片元素
+     * @param {string} bangumiId - 番剧ID
+     */
+    async initLikeButton(card, bangumiId) {
+        const likeButton = card.querySelector('.like-button');
+        if (!likeButton) return;
+
+        try {
+            // 获取用户信息
+            const user = await fetch('/is_login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            }).then(response => response.json());
+
+            // 确保 window.pendingUpdates 存在
+            if (!window.pendingUpdates) {
+                window.pendingUpdates = [];
+            }
+
+            // 设置初始状态
+            const existingUpdate = window.pendingUpdates.find(
+                update => update.bangumi_id === bangumiId
+            );
+            
+            // 根据状态设置初始图标
+            likeButton.style.backgroundImage = `url(/img/${existingUpdate ? 'unlike' : 'like'}.png)`;
+
+            likeButton.onclick = function() {
+                if (existingUpdate) {
+                    window.pendingUpdates = window.pendingUpdates.filter(
+                        update => update.bangumi_id !== bangumiId
+                    );
+                    this.style.backgroundImage = 'url(/img/like.png)';
+                } else {
+                    window.pendingUpdates.push({
+                        'user': user['nickname'],
+                        'user_id': user['user_id'],
+                        'code': 100,
+                        'bangumi_id': bangumiId,
+                        'if_insert': 0
+                    });
+                    this.style.backgroundImage = 'url(/img/unlike.png)';
+                }
+            };
+        } catch (error) {
+            console.error('初始化收藏按钮失败:', error);
+        }
+    }
+
+    /**
      * 展示搜索结果
      * @param {Array} data - 搜索结果数据数组
      */
@@ -134,6 +185,11 @@ class BangumiSearch {
         if (data.length === 0) {
             this.searchResults.innerHTML = '<div class="no-results">未找到相关番剧</div>';
             return;
+        }
+
+        // 确保 pendingUpdates 存在
+        if (!window.pendingUpdates) {
+            window.pendingUpdates = [];
         }
 
         // 生成结果HTML
@@ -153,12 +209,19 @@ class BangumiSearch {
                         <h3 class="anime-title">${anime.banguminame || '未知番剧'}</h3>
                         <p class="update-time">${anime.screening || '更新时间未知'}</p>
                     </div>
+                    <div class="like-button" style="background-image: url('/img/like.png');" data-id="${anime.id}"></div>
                 </div>
             `;
         }).filter(html => html !== '').join('');
 
-        // 更新DOM
         this.searchResults.innerHTML = resultsHTML || '<div class="no-results">未找到相关番剧</div>';
+
+        // 为每个卡片初始化收藏按钮
+        const cards = this.searchResults.querySelectorAll('.bangumicard');
+        cards.forEach(card => {
+            const bangumiId = card.querySelector('.like-button').dataset.id;
+            this.initLikeButton(card, bangumiId);
+        });
     }
 }
 
