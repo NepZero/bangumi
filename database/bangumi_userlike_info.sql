@@ -36,7 +36,7 @@ CREATE TABLE `userlike_info` (
 
 LOCK TABLES `userlike_info` WRITE;
 /*!40000 ALTER TABLE `userlike_info` DISABLE KEYS */;
-INSERT INTO `userlike_info` VALUES (1,'nepnep',3),(1,'nepnep',4),(1,'nepnep',6),(1,'nepnep',7),(1,'nepnep',10),(1,'nepnep',14),(1,'nepnep',15),(1,'nepnep',16),(1,'nepnep',19),(1,'nepnep',20),(1,'nepnep',22),(1,'nepnep',25),(1,'nepnep',28),(1,'nepnep',30);
+INSERT INTO `userlike_info` VALUES (1,'nepnep',14),(1,'nepnep',15),(1,'nepnep',16),(1,'nepnep',20),(1,'nepnep',25),(1,'nepnep',28),(1,'nepnep',30),(1,'nepnep',7),(1,'nepnep',4),(1,'nepnep',2);
 /*!40000 ALTER TABLE `userlike_info` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-17 12:01:51
+-- Dump completed on 2025-05-25 20:40:47

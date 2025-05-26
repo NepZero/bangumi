@@ -35,7 +35,8 @@ class BangumiSearch {
         
         if (!text) return;
 
-        try {
+        try
+        {
             // 重置标签搜索表单
             this.tagSearchForm.reset();
             this.showLoading();
@@ -46,7 +47,7 @@ class BangumiSearch {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text })
             });
-            
+
             const result = await response.json();
             this.displayResults(result);
         } catch (error) {
@@ -84,11 +85,12 @@ class BangumiSearch {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
-            
-            if (!response.ok) {
+
+            if (!response.ok)
+            {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            
+
             const result = await response.json();
 
             // 处理返回的数据

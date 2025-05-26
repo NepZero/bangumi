@@ -57,6 +57,7 @@ nav ul li {
     /* 水平左对齐 + 垂直居中 */
     line-height: 3vw;
     /* 保持与导航栏高度一致 */
+    user-select: none;
 }
 
 .like {

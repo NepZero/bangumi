@@ -15,7 +15,7 @@ def excel_to_mysql(excel_file, table_name, db_config,sheet=''):
     try:
         # 读取Excel文件
         if sheet:
-            df=pd.read_excel(excel_file,sheet_name=sheet)
+            df=pd.read_excel(excel_file,sheet_name=sheet,dtype={'season':str})
             print(f"成功读取Excel文件: {excel_file}")
         else:
             df = pd.read_excel(excel_file)
@@ -37,14 +37,18 @@ def excel_to_mysql(excel_file, table_name, db_config,sheet=''):
             values = (df.at[i,'banguminame'], df.at[i,'start_time'], df.at[i,'screening'] , df.at[i,'platform'], df.at[i,'isfinish'], df.at[i,'episodes'],df.at[i,'season'])
             cursor.execute(sql, values)
 
-            sql=f'select id from {table_name} where banguminame="{df.at[i,'banguminame']}"'
+            sql=f'select id from {table_name} where banguminame="{df.at[i,'banguminame']}" and season="{df.at[i,'season']}"'
             cursor.execute(sql)
             id=cursor.fetchone()[0]
+            # print(id)
+            # print(df.at[i,'banguminame'])
             sql=f"INSERT INTO season_info (banguminame,id,season) VALUES (%s, %s, %s)"
             values=(df.at[i,'banguminame'],id,df.at[i,'season'])
             cursor.execute(sql, values)
-
-            tags=df.at[i,'tag'].split('/')
+            if '/' in df.at[i,'tag']:
+                tags=df.at[i,'tag'].split('/')
+            elif '、' in df.at[i,'tag']:
+                tags=df.at[i,'tag'].split('、')
             for tag in tags:
                 sql=f"INSERT INTO tag_info (banguminame,id,tag) VALUES (%s, %s, %s)"
                 values=(df.at[i,'banguminame'],id,tag)
@@ -70,9 +74,9 @@ db_config = {
 
 # 使用示例
 if __name__ == "__main__":
-    excel_file = '../../2025年4月新番表v4.0 byHazx.xlsx'  # 替换为你的Excel文件路径
+    excel_file = '../../清洗结果/2022.1 新番清洗结果.xlsx'  # 替换为你的Excel文件路径
     table_name = 'bangumi_info'  # 替换为你想要的表名
-    sheet_name='Sheet1'
+    sheet_name='Cleaned新番表'
     excel_to_mysql(excel_file, table_name, db_config,sheet_name)
     # df=pd.read_excel(excel_file,sheet_name=sheet_name)
     # print(df)
