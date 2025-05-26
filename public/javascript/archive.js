@@ -129,7 +129,7 @@ function Init()
                 }
                 else
                 {
-                    fetchA = fetch('/userinfo_update', { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify({ 'user': user['nickname'], 'user_id': user['user_id'], 'code': 100, 'bangumi_id': this.className, 'if_insert': 0 }) }).then(response => console.log(response.json()));
+                    fetchA = fetch('/userinfo_update', { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify({ 'user': user['nickname'], 'user_id': user['user_id'], 'code': 100, 'bangumi_id': bangumi_informations[this.className]['id'], 'if_insert': 0 }) }).then(response => console.log(response.json()));
                 }
 
             }
@@ -145,7 +145,7 @@ function Init()
                 }
                 else
                 {
-                    fetchA = fetch('/userinfo_update', { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify({ 'user': user['nickname'], 'user_id': user["user_id"], 'code': 100, 'bangumi_id': this.className, 'if_insert': 1 }) }).then(response => console.log(response.json()));
+                    fetchA = fetch('/userinfo_update', { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify({ 'user': user['nickname'], 'user_id': user["user_id"], 'code': 100, 'bangumi_id': bangumi_informations[this.className]['id'], 'if_insert': 1 }) }).then(response => console.log(response.json()));
                 }
 
             }
@@ -303,9 +303,17 @@ async function fetchData()
         {
             fetchC = fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json', 'user': user['nickname'] } }).then(response => response.json());
             const responseC = await fetchC;
-            for (var i = 1; i <= responseC['bangumi_list'].length; i++)
+            console.log(responseC)
+            for (var i = 0; i < responseC['bangumi_list'].length; i++)
             {
-                likes[responseC['bangumi_list'][i - 1]['id']] = 1;
+                likes_id.push(responseC['bangumi_list'][i]['id'])
+            }
+            for (var i = 0; i < likes.length; i++)
+            {
+                if (likes_id.indexOf(bangumi_informations[i]['id']) != -1)
+                {
+                    likes[i] = 1;
+                }
             }
         }
 
