@@ -5,7 +5,7 @@ var bangumi_informations = [
 var user = {};
 var bangumicards_box = document.getElementsByClassName("bangumicards-box")[0];
 var bangumicard = [];
-var season_likes = {}
+var likes_id = []
 var likes = [];
 var bangumicard_like = [];
 var season;
@@ -79,7 +79,7 @@ function more_season()
 
 function Init()
 {
-    for (var i = 1; i <= bangumi_informations.length; i++)
+    for (var i = 0; i < bangumi_informations.length; i++)
     {
 
         bangumicard[i] = document.createElement('div');
@@ -121,10 +121,11 @@ function Init()
             {
                 this.style.backgroundImage = 'url(/img/unlike.png)';
                 likes[this.className] = 0;
+                var index = likes_id.indexOf(bangumi_informations[this.className]['id']);
+                likes_id.splice(index, 1);
                 if (user['code'] == 401)
                 {
-                    season_likes[season] = likes;
-                    saveListToCookie('likes', season_likes);
+                    saveListToCookie('likes_id', likes_id);
                 }
                 else
                 {
@@ -137,14 +138,13 @@ function Init()
 
                 this.style.backgroundImage = 'url(/img/like.png)';
                 likes[this.className] = 1;
+                likes_id.push(bangumi_informations[this.className]['id']);
                 if (user['code'] == 401)
                 {
-                    season_likes[season] = likes;
-                    saveListToCookie('likes', season_likes);
+                    saveListToCookie('likes_id', likes_id);
                 }
                 else
                 {
-                    console.log(111);
                     fetchA = fetch('/userinfo_update', { method: 'POST', headers: { 'Content-Type': 'application/json', }, body: JSON.stringify({ 'user': user['nickname'], 'user_id': user["user_id"], 'code': 100, 'bangumi_id': this.className, 'if_insert': 1 }) }).then(response => console.log(response.json()));
                 }
 
@@ -159,8 +159,7 @@ function Init()
         bangumicard_image.style.backgroundColor = "white";
         bangumicard_image.style.borderRadius = "0.5vw";
 
-        // bangumicard_image.style.backgroundImage = `url("/img/${bangumi_informations[i - 1]['season']}/${bangumi_informations[i - 1]['id']}.png")`;
-        setimg(`/img/${bangumi_informations[i - 1]['season']}/${bangumi_informations[i - 1]['id']}.png`, bangumicard_image);
+        setimg(`/img/${bangumi_informations[i]['season']}/${bangumi_informations[i]['id']}.png`, bangumicard_image);
         bangumicard_image.style.backgroundRepeat = 'no - repeat';
         bangumicard_image.style.backgroundPosition = 'center';
         bangumicard_image.style.backgroundSize = 'cover';
@@ -175,8 +174,8 @@ function Init()
         // bangumicard_header.style.backgroundColor = "blue";
         bangumicard_header.style.left = "25%";
         bangumicard_header.style.top = "10%";
-        bangumicard_header.title = bangumi_informations[i - 1]["banguminame"];
-        bangumicard_header.innerHTML = bangumi_informations[i - 1]["banguminame"];
+        bangumicard_header.title = bangumi_informations[i]["banguminame"];
+        bangumicard_header.innerHTML = bangumi_informations[i]["banguminame"];
         bangumicard_header.style.textAlign = "center";
         bangumicard_header.style.fontSize = "1.5vw";
         bangumicard_header.style.overflow = 'hidden';
@@ -192,7 +191,7 @@ function Init()
         bangumicard_time.style.left = "20%";
         bangumicard_time.style.top = "50%";
         bangumicard_time.style.textAlign = "center";
-        bangumicard_time.innerHTML = bangumi_informations[i - 1]["screening"];
+        bangumicard_time.innerHTML = bangumi_informations[i]["screening"];
         bangumicard_time.style.fontSize = "1vw";
         bangumicard[i].appendChild(bangumicard_time);
 
@@ -204,8 +203,8 @@ function Init()
         bangumicard_platform.style.left = "48%";
         bangumicard_platform.style.top = "50%";
         bangumicard_platform.style.textAlign = "center";
-        if (bangumi_informations[i - 1]["platform"])
-            bangumicard_platform.innerHTML = "大陆: " + bangumi_informations[i - 1]["platform"];
+        if (bangumi_informations[i]["platform"])
+            bangumicard_platform.innerHTML = "大陆: " + bangumi_informations[i]["platform"];
         else
             bangumicard_platform.innerHTML = "大陆: " + "暂无";
         bangumicard_platform.style.fontSize = "1vw";
@@ -219,7 +218,7 @@ function Init()
         bangumicard_episodes.style.left = "48%";
         bangumicard_episodes.style.top = "75%";
         bangumicard_episodes.style.textAlign = "center";
-        bangumicard_episodes.innerHTML = "集数: " + bangumi_informations[i - 1]["episodes"];
+        bangumicard_episodes.innerHTML = "集数: " + bangumi_informations[i]["episodes"];
         bangumicard_episodes.style.fontSize = "1vw";
         bangumicard[i].appendChild(bangumicard_episodes);
 
@@ -231,7 +230,7 @@ function Init()
         bangumicard_isfinish.style.left = "72%";
         bangumicard_isfinish.style.top = "50%";
         bangumicard_isfinish.style.textAlign = "center";
-        if (bangumi_informations[i - 1]["isfinish"] == 1)
+        if (bangumi_informations[i]["isfinish"] == 1)
             bangumicard_isfinish.innerHTML = "已完结";
         else
             bangumicard_isfinish.innerHTML = "连载中";
@@ -258,7 +257,7 @@ function Init()
         bangumicard_start.style.left = "20%";
         bangumicard_start.style.top = "75%";
         bangumicard_start.style.textAlign = "center";
-        bangumicard_start.innerHTML = "开播: " + bangumi_informations[i - 1]["start_time"];
+        bangumicard_start.innerHTML = "开播: " + bangumi_informations[i]["start_time"];
         bangumicard_start.style.fontSize = "1vw";
         bangumicard[i].appendChild(bangumicard_start);
 
@@ -281,19 +280,22 @@ async function fetchData()
         const responseB = await fetchB;
         user = responseB;
 
-        for (var i = 1; i <= responseA['data'].length; i++)
+        for (var i = 0; i < responseA['data'].length; i++)
         {
             likes[i] = 0;
         }
         if (user['code'] == 401)
         {
-            if (getListFromCookie('likes') != null)
+            if (getListFromCookie('likes_id') != null)
             {
-                console.log(season_likes)
-                season_likes = getListFromCookie('likes');
-                if (season_likes[season] != null)
+                likes_id = getListFromCookie('likes_id');
+                console.log(likes_id);
+                for (var i = 0; i < likes.length; i++)
                 {
-                    likes = season_likes[season]
+                    if (likes_id.indexOf(bangumi_informations[i]['id']) != -1)
+                    {
+                        likes[i] = 1;
+                    }
                 }
             }
         }
