@@ -13,10 +13,11 @@ a {
     color: inherit;
 }
 
+/* 搜索表单样式 */
 .search-container {
     max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
+    margin: 20px auto;
+    padding: 0 15px;
 }
 
 /* 搜索区块通用样式 */
@@ -55,26 +56,40 @@ h2 {
     outline: none;
 }
 
-/* 标签搜索样式 */
+/* 标签搜索区域样式 */
+.tag-search {
+    margin-top: 30px;
+}
+
 .select-group {
     display: flex;
     gap: 15px;
-    flex-wrap: wrap;
+    margin-top: 10px;
 }
 
+/* 下拉选择框样式 */
 select {
     padding: 8px 12px;
-    border: 2px solid #ddd;
+    border: 1px solid #ddd;
     border-radius: 4px;
     background-color: white;
-    min-width: 150px;
-    cursor: pointer;
-    transition: border-color 0.3s;
+    font-size: 14px;
+    min-width: 120px;
 }
 
-select:focus {
-    border-color: palevioletred;
-    outline: none;
+/* 季度选择器特别样式 */
+#seasonSelect {
+    min-width: 140px;  /* 适应较长的季度文本 */
+}
+
+/* 标签选择器特别样式 */
+#tagSelect {
+    min-width: 100px;
+}
+
+/* 状态选择器特别样式 */
+#statusSelect {
+    min-width: 100px;
 }
 
 /* 按钮样式 */
@@ -100,6 +115,21 @@ button:hover {
     gap: 15px;
     /* 减小间距 */
     padding: 15px;
+}
+
+/* 搜索按钮样式 */
+button[type="submit"] {
+    padding: 8px 20px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover {
+    background-color: #357abd;
 }
 
 /* 加载和错误状态 */

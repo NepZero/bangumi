@@ -11,9 +11,13 @@ class BangumiSearch {
         this.textSearchForm = document.getElementById('textSearchForm');
         this.tagSearchForm = document.getElementById('tagSearchForm');
         this.searchResults = document.getElementById('searchResults');
+        this.seasonSelect = document.getElementById('seasonSelect');
+        this.tagSelect = document.getElementById('tagSelect');
+        this.statusSelect = document.getElementById('statusSelect');
         
         // 初始化事件监听器
         this.initEventListeners();
+        this.initSeasonOptions();
     }
 
     /**
@@ -23,6 +27,34 @@ class BangumiSearch {
     initEventListeners() {
         this.textSearchForm.addEventListener('submit', this.handleTextSearch.bind(this));
         this.tagSearchForm.addEventListener('submit', this.handleTagSearch.bind(this));
+    }
+
+    /**
+     * 初始化季度选项
+     * 生成从2024.1到2025.4的季度选项
+     */
+    initSeasonOptions() {
+        // 设定固定的季度范围
+        const options = [
+            { value: '2025.4', text: '2025年4月' },
+            { value: '2025.1', text: '2025年1月' },
+            { value: '2024.10', text: '2024年10月' },
+            { value: '2024.7', text: '2024年7月' },
+            { value: '2024.4', text: '2024年4月' },
+            { value: '2024.1', text: '2024年1月' }
+        ];
+
+        // 更新季度选择器选项
+        const defaultOptions = `
+            <option value="">选择季度</option>
+            <option value="all">所有</option>
+        `;
+
+        const seasonOptions = options.map(option => 
+            `<option value="${option.value}">${option.text}</option>`
+        ).join('');
+
+        this.seasonSelect.innerHTML = defaultOptions + seasonOptions;
     }
 
     /**
