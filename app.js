@@ -306,6 +306,26 @@ app.post('/searchbytext', (req, res) =>
     })
 })
 
+/**
+ * 根据ID列表返回番剧详细信息
+ * 请求地址: /getBangumiDetailsByIds
+ * 请求方式: post
+ * 请求体: { ids: [id1, id2, ...] }
+ * json回复: 番剧详细信息列表
+ */
+app.post('/getBangumiDetailsByIds', async (req, res) => {
+    const ids = req.body.ids; // 假设前端在body中发送{ ids: [...] }
+    if (!Array.isArray(ids) || ids.length === 0) {
+        return res.status(400).json({ code: 400, message: '请求体需包含非空ID数组' });
+    }
+    try {
+        const bangumiList = await db.getBangumiByIds(ids);
+        res.json({ code: 200, data: bangumiList });
+    } catch (error) {
+        console.error('获取指定ID番剧信息出错:', error);
+        res.status(500).json({ code: 500, message: '服务器内部错误' });
+    }
+});
 
 //监听端口 启动服务
 app.listen(8080, () =>

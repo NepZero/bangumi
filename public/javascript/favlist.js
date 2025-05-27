@@ -54,12 +54,16 @@ async function loadAnimeData() {
             renderAnimeList([], null);
             return;
         }
-        // 获取所有番剧信息，然后筛选
-        const response = await fetch('/bangumiInfo', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(res => res.json());
-        const allAnime = response.data || response.bangumi_list || [];
-        // 只保留cookie中收藏的
-        const favAnime = allAnime.filter(anime => favList.includes(anime.id));
-        renderAnimeList(favAnime, null);
+        // 调用新接口根据ID列表获取番剧详细信息
+        const response = await fetch('/getBangumiDetailsByIds', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ids: favList }) // 发送ID列表
+        }).then(res => res.json());
+
+        const favAnime = response.data || []; // 获取后端返回的番剧数据
+
+        renderAnimeList(favAnime, null); // 渲染获取到的番剧列表
     }
 }
 
@@ -85,9 +89,6 @@ function renderAnimeList(animeList, user) {
         `;
         container.appendChild(card);
         const likeButton = card.querySelector('.like-button');
-
-        // 判断当前id是否在cookie里
-        const isFav = favList.includes(anime.id);
 
         // 渲染按钮状态
         likeButton.style.backgroundImage ='url(/img/like.png)';
