@@ -125,7 +125,7 @@ function Init()
                 likes_id.splice(index, 1);
                 if (user['code'] == 401)
                 {
-                    saveListToCookie('likes_id', likes_id);
+                    saveListToCookie('favlist', likes_id);
                 }
                 else
                 {
@@ -141,7 +141,7 @@ function Init()
                 likes_id.push(bangumi_informations[this.className]['id']);
                 if (user['code'] == 401)
                 {
-                    saveListToCookie('likes_id', likes_id);
+                    saveListToCookie('favlist', likes_id);
                 }
                 else
                 {
@@ -286,9 +286,9 @@ async function fetchData()
         }
         if (user['code'] == 401)
         {
-            if (getListFromCookie('likes_id') != null)
+            if (getListFromCookie('favlist') != null)
             {
-                likes_id = getListFromCookie('likes_id');
+                likes_id = getListFromCookie('favlist');
                 console.log(likes_id);
                 for (var i = 0; i < likes.length; i++)
                 {
