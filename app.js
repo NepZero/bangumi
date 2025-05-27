@@ -49,14 +49,7 @@ app.get('/login', (req, res) =>
 });
 app.get('/favlist', (req, res) =>
 {
-    //用户未登录 禁止查看收藏列表
-    if (req.session.userId && req.session.nickname)
-    {
-        res.sendFile(__dirname + '/public/html/favlist.html');
-    } else
-    {
-        res.redirect('/login');
-    }
+    res.sendFile(__dirname + '/public/html/favlist.html');
 });
 app.get('/register', (req, res) =>
 {
@@ -255,7 +248,7 @@ app.post('/week_table', (req, res) =>
  */
 app.post('/user_like', (req, res) =>
 {
-    const user = req.headers['user'];
+    const user = req.body.user;
     db.getuser_like(user)
         .then(data =>
         {

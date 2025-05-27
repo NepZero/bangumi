@@ -301,7 +301,11 @@ async function fetchData()
         }
         else
         {
-            fetchC = fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json', 'user': user['nickname'] } }).then(response => response.json());
+            fetchC = fetch('/user_like', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user: user['nickname'] })
+            }).then(response => response.json());
             const responseC = await fetchC;
             console.log(responseC)
             for (var i = 0; i < responseC['bangumi_list'].length; i++)
