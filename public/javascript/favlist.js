@@ -27,7 +27,7 @@ async function loadAnimeData() {
     const user = await fetch('/is_login', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
     // 登录后自动同步cookie收藏
     if (user && user.nickname) {
-        let favList = getListFromCookie('likes_id');
+        let favList = getListFromCookie('favlist');
         if (favList && favList.length > 0) {
             for (const bangumiId of favList) {
                 await fetch('/userinfo_update', {
@@ -42,14 +42,14 @@ async function loadAnimeData() {
                     })
                 });
             }
-            setListToCookie('likes_id', []); // 清空cookie
+            setListToCookie('favlist', []); // 清空cookie
         }
         // 登录后：只显示数据库收藏
         const response = await fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user: user['nickname'] }) }).then(res => res.json());
         renderAnimeList(response.bangumi_list, user);
     } else {
         // 未登录：只显示cookie收藏
-        let favList = getListFromCookie('likes_id');
+        let favList = getListFromCookie('favlist');
         if (!favList || favList.length === 0) {
             renderAnimeList([], null);
             return;
@@ -66,7 +66,7 @@ async function loadAnimeData() {
 function renderAnimeList(animeList, user) {
     const container = document.querySelector('.anime-grid');
     container.innerHTML = '';
-    let favList = getListFromCookie('likes_id');
+    let favList = getListFromCookie('favlist');
     animeList.forEach(anime => {
         const card = document.createElement('div');
         card.className = 'anime-card';
@@ -93,7 +93,7 @@ function renderAnimeList(animeList, user) {
         likeButton.style.backgroundImage ='url(/img/like.png)';
 
         likeButton.onclick = function () {
-            let favList = getListFromCookie('likes_id');
+            let favList = getListFromCookie('favlist');
             const isFav = favList.includes(anime.id);
             if (!user || !user.nickname) {
                 // 未登录，切换收藏状态
@@ -106,7 +106,7 @@ function renderAnimeList(animeList, user) {
                     favList.push(anime.id);
                     this.style.backgroundImage = 'url(/img/like.png)';
                 }
-                setListToCookie('likes_id', favList);
+                setListToCookie('favlist', favList);
                 // 不强制刷新整个列表，按钮状态已即时切换
                 return;
             }
