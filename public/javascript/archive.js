@@ -19,6 +19,7 @@ function more_season()
     var season_div = ['2025.4', '2025.1', '2024.10', '2024.7', '2024.4', '2024.1', '2023.10', '2023.7', '2023.4', '2023.1'];
     var season_cards = [];
 
+
     more.onclick = function ()
     {
         if (more_flag == 0)
