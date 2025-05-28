@@ -1,13 +1,89 @@
 // 在全局范围定义一个数组来存储需要更新的收藏状态
 let pendingUpdates = [];
 
+// 新增：cookie操作函数
+function setListToCookie(listName, list)
+{
+    document.cookie = `${listName}=${encodeURIComponent(JSON.stringify(list))};path=/;max-age=2592000`;
+}
+function getListFromCookie(listName)
+{
+    const name = listName + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split(';');
+    for (let i = 0; i < cookieArray.length; i++)
+    {
+        let cookie = cookieArray[i].trim();
+        if (cookie.indexOf(name) === 0)
+        {
+            const listString = cookie.substring(name.length, cookie.length);
+            try
+            {
+                return JSON.parse(listString);
+            } catch
+            {
+                return [];
+            }
+        }
+    }
+    return [];
+}
+
 async function loadAnimeData()
 {
     const user = await fetch('/is_login', { method: 'POST', headers: { 'Content-Type': 'application/json' } }).then(response => response.json());
-    const response = await fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json', 'user': user['nickname'] } }).then(res => res.json());
-    const animeList = response.bangumi_list; const container = document.querySelector('.anime-grid');
-    container.innerHTML = ''; // 清空容器
-    //console.log(animeList);
+    // 登录后自动同步cookie收藏
+    if (user && user.nickname)
+    {
+        let favList = getListFromCookie('favlist');
+        if (favList && favList.length > 0)
+        {
+            for (const bangumiId of favList)
+            {
+                await fetch('/userinfo_update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        'user': user['nickname'],
+                        'user_id': user['user_id'],
+                        'code': 100,
+                        'bangumi_id': bangumiId,
+                        'if_insert': 1
+                    })
+                });
+            }
+            setListToCookie('favlist', []); // 清空cookie
+        }
+        // 登录后：只显示数据库收藏
+        const response = await fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user: user['nickname'] }) }).then(res => res.json());
+        renderAnimeList(response.bangumi_list, user);
+    } else
+    {
+        // 未登录：只显示cookie收藏
+        let favList = getListFromCookie('favlist');
+        if (!favList || favList.length === 0)
+        {
+            renderAnimeList([], null);
+            return;
+        }
+        // 调用新接口根据ID列表获取番剧详细信息
+        const response = await fetch('/getBangumiDetailsByIds', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ids: favList }) // 发送ID列表
+        }).then(res => res.json());
+
+        const favAnime = response.data || []; // 获取后端返回的番剧数据
+
+        renderAnimeList(favAnime, null); // 渲染获取到的番剧列表
+    }
+}
+
+function renderAnimeList(animeList, user)
+{
+    const container = document.querySelector('.anime-grid');
+    container.innerHTML = '';
+    let favList = getListFromCookie('favlist');
     animeList.forEach(anime =>
     {
         const card = document.createElement('div');
@@ -23,21 +99,42 @@ async function loadAnimeData()
                     <span class="episode-info">全${anime.episodes}话</span>
                 </div>
             </div>
-            <div class="like-button" style="background-image: url('/img/like.png');" data-id="${anime.id}"></div>
+            <div class="like-button" data-id="${anime.id}"></div>
         `;
         container.appendChild(card);
         const likeButton = card.querySelector('.like-button');
+
+        // 渲染按钮状态
+        likeButton.style.backgroundImage = 'url(/img/like.png)';
+
         likeButton.onclick = function ()
         {
-            const bangumiId = this.dataset.id;
-
+            let favList = getListFromCookie('favlist');
+            const isFav = favList.includes(anime.id);
+            if (!user || !user.nickname)
+            {
+                // 未登录，切换收藏状态
+                if (isFav)
+                {
+                    // 取消收藏
+                    favList = favList.filter(id => id !== anime.id);
+                    this.style.backgroundImage = 'url(/img/unlike.png)';
+                } else
+                {
+                    // 添加收藏
+                    favList.push(anime.id);
+                    this.style.backgroundImage = 'url(/img/like.png)';
+                }
+                setListToCookie('favlist', favList);
+                // 不强制刷新整个列表，按钮状态已即时切换
+                return;
+            }
             // 检查是否已经在待更新列表中
-            const existingUpdate = pendingUpdates.find(update => update.bangumi_id === bangumiId);
-
+            const existingUpdate = pendingUpdates.find(update => update.bangumi_id === anime.id);
             if (existingUpdate)
             {
                 // 如果已经存在，移除这个更新
-                pendingUpdates = pendingUpdates.filter(update => update.bangumi_id !== bangumiId);
+                pendingUpdates = pendingUpdates.filter(update => update.bangumi_id !== anime.id);
                 this.style.backgroundImage = 'url(/img/like.png)';
             } else
             {
@@ -46,19 +143,18 @@ async function loadAnimeData()
                     'user': user['nickname'],
                     'user_id': user['user_id'],
                     'code': 100,
-                    'bangumi_id': bangumiId,
+                    'bangumi_id': anime.id,
                     'if_insert': 0
                 });
                 this.style.backgroundImage = 'url(/img/unlike.png)';
             }
         };
 
-        // 添加鼠标悬停效果
+        // 悬停效果
         likeButton.onmouseover = function ()
         {
             this.style.filter = 'brightness(1.2)';
         };
-
         likeButton.onmouseout = function ()
         {
             this.style.filter = '';
@@ -67,24 +163,20 @@ async function loadAnimeData()
 }
 
 // 在页面刷新前发送所有待更新的请求
-window.addEventListener('beforeunload', async function (e)
+window.addEventListener('beforeunload', function (e)
 {
     if (pendingUpdates.length > 0)
     {
-        // 阻止页面立即关闭，等待请求完成
-        e.preventDefault();
-        e.returnValue = '';
+        // 原有阻止跳转和弹窗的代码，现已注释
+        // e.preventDefault();
+        // e.returnValue = '';
 
         try
         {
-            // 发送所有待更新的请求
+            // 使用sendBeacon静默发送所有待更新的请求
             for (const update of pendingUpdates)
             {
-                await fetch('/userinfo_update', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(update)
-                });
+                navigator.sendBeacon('/userinfo_update', new Blob([JSON.stringify(update)], { type: 'application/json' }));
             }
             // 清空待更新列表
             pendingUpdates = [];
@@ -97,6 +189,8 @@ window.addEventListener('beforeunload', async function (e)
 
 document.addEventListener('DOMContentLoaded', loadAnimeData);
 
+
+// 季度信息下拉菜单
 function more_season()
 {
     var body = document.body;
@@ -105,6 +199,7 @@ function more_season()
     var more_flag = 0;
     var season_div = ['2025.4', '2025.1', '2024.10', '2024.7', '2024.4', '2024.1', '2023.10', '2023.7', '2023.4', '2023.1'];
     var season_cards = [];
+
 
     more.onclick = function ()
     {

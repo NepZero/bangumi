@@ -19,6 +19,7 @@ function more_season()
     var season_div = ['2025.4', '2025.1', '2024.10', '2024.7', '2024.4', '2024.1', '2023.10', '2023.7', '2023.4', '2023.1'];
     var season_cards = [];
 
+
     more.onclick = function ()
     {
         if (more_flag == 0)
@@ -125,7 +126,7 @@ function Init()
                 likes_id.splice(index, 1);
                 if (user['code'] == 401)
                 {
-                    saveListToCookie('likes_id', likes_id);
+                    saveListToCookie('favlist', likes_id);
                 }
                 else
                 {
@@ -141,7 +142,7 @@ function Init()
                 likes_id.push(bangumi_informations[this.className]['id']);
                 if (user['code'] == 401)
                 {
-                    saveListToCookie('likes_id', likes_id);
+                    saveListToCookie('favlist', likes_id);
                 }
                 else
                 {
@@ -286,9 +287,9 @@ async function fetchData()
         }
         if (user['code'] == 401)
         {
-            if (getListFromCookie('likes_id') != null)
+            if (getListFromCookie('favlist') != null)
             {
-                likes_id = getListFromCookie('likes_id');
+                likes_id = getListFromCookie('favlist');
                 console.log(likes_id);
                 for (var i = 0; i < likes.length; i++)
                 {
@@ -301,7 +302,11 @@ async function fetchData()
         }
         else
         {
-            fetchC = fetch('/user_like', { method: 'POST', headers: { 'Content-Type': 'application/json', 'user': user['nickname'] } }).then(response => response.json());
+            fetchC = fetch('/user_like', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user: user['nickname'] })
+            }).then(response => response.json());
             const responseC = await fetchC;
             console.log(responseC)
             for (var i = 0; i < responseC['bangumi_list'].length; i++)
