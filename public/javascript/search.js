@@ -232,6 +232,7 @@ class BangumiSearch {
                 return '';
             }
 
+            // 修改 displayResults 方法中的卡片模板
             return `
                 <div class="bangumicard">
                     <div class="card-cover">
@@ -240,10 +241,12 @@ class BangumiSearch {
                              onerror="this.src='/img/0.jpg'">
                     </div>
                     <div class="card-content">
-                        <h3 class="anime-title">${anime.banguminame || '未知番剧'}</h3>
+                        <div class="info-line">
+                            <h3 class="anime-title">${anime.banguminame || '未知番剧'}</h3>
+                            <div class="like-button" style="background-image: url('/img/like.png');" data-id="${anime.id}"></div>
+                        </div>
                         <p class="update-time">${anime.screening || '更新时间未知'}</p>
                     </div>
-                    <div class="like-button" style="background-image: url('/img/like.png');" data-id="${anime.id}"></div>
                 </div>
             `;
         }).filter(html => html !== '').join('');
