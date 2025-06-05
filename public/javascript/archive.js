@@ -172,7 +172,6 @@ function Init()
         bangumicard_header.style.height = "30%";
         bangumicard_header.style.width = "70%";
         bangumicard_header.style.position = "absolute";
-        // bangumicard_header.style.backgroundColor = "blue";
         bangumicard_header.style.left = "25%";
         bangumicard_header.style.top = "10%";
         bangumicard_header.title = bangumi_informations[i]["banguminame"];
@@ -246,7 +245,12 @@ function Init()
         bangumicard_tags.style.left = "72%";
         bangumicard_tags.style.top = "75%";
         bangumicard_tags.style.textAlign = "center";
-        bangumicard_tags.innerHTML = "标签";
+        bangumicard_tags.innerHTML = bangumi_informations[i]['tag'];
+        bangumicard_tags.title = bangumi_informations[i]['tag'];
+        bangumicard_tags.style.overflow = 'hidden';
+        bangumicard_tags.style.textOverflow = 'ellipsis';
+        bangumicard_tags.style.whiteSpace = 'nowrap';
+        // bangumicard_tags.style.backgroundColor = 'red'
         bangumicard_tags.style.fontSize = "1vw";
         bangumicard[i].appendChild(bangumicard_tags);
 
@@ -278,6 +282,11 @@ async function fetchData()
 
         const responseA = await fetchA;
         bangumi_informations = responseA['data'];
+
+        for (var i = 0; i < bangumi_informations.length; i++)
+        {
+            bangumi_informations[i]['tag'] = bangumi_informations[i]['tag'].join('/');
+        }
         const responseB = await fetchB;
         user = responseB;
 
